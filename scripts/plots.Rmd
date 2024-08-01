@@ -1,0 +1,64 @@
+---
+title: "Plots for Poster"
+author: "EKB"
+date: "`r Sys.Date()`"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data in the Wild: Fall 2023
+
+This document is for making plots based on pre- and post-surveys from the Fall 2023 iteration of Data in the Wild.
+
+### Packages and Data
+
+Load `tidyverse`
+```{r}
+library(tidyverse)
+```
+
+Data were compiled and sent over by Jill Williams
+
+```{r}
+data <- read_csv("../data/Fall_2023_PrePostMatched_DIW_Deidentified.csv", skip = 2) %>% 
+  rename(Q39_pre = `Q39...3`, Q39_post = `Q39...4`,
+         Q15_pre = `Q15...5`, Q15_post = `Q15...6`,
+         Q17_1_pre = `Q17_1...7`, Q17_1_post = `Q17_1...8`,
+         Q17_2_pre = `Q17_2...9`, Q17_2_post = `Q17_2...10`,
+         Q17_3_pre = `Q17_3...11`, Q17_3_post = `Q17_3...12`,
+         Q17_4_pre = `Q17_4...13`, Q17_4_post = `Q17_4...14`) %>% 
+  select(Q39_pre:Q17_4_post)
+glimpse(data)
+```
+Pull out the questions and save for later.
+
+```{r}
+questions <- data %>% slice(1:2)
+questions
+
+data <- data %>% 
+  slice(-1) %>% 
+  mutate(across(everything(), as.numeric))
+head(data)
+```
+
+Rearrange data so each question has pre and post values in the same column and create a new column with whether the value is pre or post
+
+```{r}
+data_pre <- data %>% 
+  select(contains("pre")) %>% 
+  mutate(survey = "pre") %>% 
+  rename_with(~ str_remove(., "_pre"))
+
+data_post <- data %>% 
+  select(contains("post")) %>% 
+  mutate(survey = "post") %>% 
+  rename_with(~ str_remove(., "_post"))
+
+data_long <- bind_rows(data_pre, data_post)
+head(data_long)
+```
+
