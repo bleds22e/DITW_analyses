@@ -18,6 +18,7 @@ This document is for making plots based on pre- and post-surveys from the Fall 2
 Load `tidyverse`
 ```{r}
 library(tidyverse)
+library(ggalluvial)
 ```
 
 Data were compiled and sent over by Jill Williams
@@ -50,15 +51,99 @@ Rearrange data so each question has pre and post values in the same column and c
 ```{r}
 data_pre <- data %>% 
   select(contains("pre")) %>% 
-  mutate(survey = "pre") %>% 
+  mutate(survey = "Pre") %>% 
   rename_with(~ str_remove(., "_pre"))
 
 data_post <- data %>% 
   select(contains("post")) %>% 
-  mutate(survey = "post") %>% 
+  mutate(survey = "Post") %>% 
   rename_with(~ str_remove(., "_post"))
 
-data_long <- bind_rows(data_pre, data_post)
+data_long <- bind_rows(data_pre, data_post) %>% 
+  mutate(survey = factor(survey, levels = c("Pre", "Post")))
 head(data_long)
+```
+
+### Plots
+
+Make plots for each question.
+
+Bar plots and river plots?
+
+Bar plots should have the average pre vs. post values with sd values
+
+```{r}
+summary_stats <- data_long %>% 
+  group_by(survey) %>% 
+  summarise(across(where(is.numeric), 
+                   list(mean = ~ mean(., na.rm = TRUE),
+                        sd = ~ sd(., na.rm = TRUE)))) 
+summary_stats
+
+summary_by_question <- summary_stats %>% 
+  pivot_longer(contains("Q"), names_to = "question", values_to = "value") %>% 
+  # create column for statistic type
+    separate(question, c("question", "stat"), extra = "merge", fill = "right") %>% 
+    separate(stat, c("temp", "stat"), fill = "left") %>% 
+    unite("question", question, temp, na.rm = T) %>% 
+  pivot_wider(names_from = question)
+head(summary_by_question)
+```
+
+#### Bar Plot
+
+```{r}
+ggplot(summary_stats, aes(x = survey, y = Q15_mean, color = survey)) +
+  geom_point(size = 5) +
+  geom_errorbar(aes(ymin = Q15_mean - Q15_sd, ymax = Q15_mean + Q15_sd), width = 0.2) +
+  geom_text(aes(label = round(Q15_mean, 1)), hjust = -0.75, color = "black", fontface = "bold", size = 8) +
+  scale_y_continuous(limits = c(0, 5)) +
+  scale_color_viridis_d(direction = -1, begin = 0.1, end = 0.9) +
+  labs(x = "Survey",
+       fill = "Survey") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        legend.position = "none",
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14))
+```
+
+#### River Plot
+
+River plots connect frequencies of categorical responses
+
+```{r}
+river_data <- data %>% 
+  select(Q15_pre, Q15_post) %>% 
+  drop_na() %>% 
+  group_by(Q15_pre, Q15_post) %>% 
+  count() %>% 
+  mutate(pre = case_when(Q15_pre == 1 ~ "Very Disinterested",
+                         Q15_pre == 2 ~ "Somewhat Disinterested",
+                         Q15_pre == 3 ~ "Neutral",
+                         Q15_pre == 4 ~ "Somewhat Interested",
+                         Q15_pre == 5 ~ "Very Interested"),
+         post = case_when(Q15_post == 1 ~ "Very Disinterested",
+                         Q15_post == 2 ~ "Somewhat Disinterested",
+                         Q15_post == 3 ~ "Neutral",
+                         Q15_post == 4 ~ "Somewhat Interested",
+                         Q15_post == 5 ~ "Very Interested")) %>% 
+  mutate(pre = factor(pre, levels = c("Very Interested", "Somewhat Interested", "Neutral", "Somewhat Disinterested", "Very Disinterested")),
+         post = factor(post, levels = c("Very Interested", "Somewhat Interested", "Neutral", "Somewhat Disinterested", "Very Disinterested")))
+```
+
+Make river plot
+
+```{r}
+ggplot(river_data, aes(axis1 = pre, axis2 = post, y = n)) +
+  geom_alluvium(aes(fill = post),
+                curve_type = "cubic") +
+  geom_stratum(aes(fill = post)) +
+  geom_text(stat = "stratum",
+            aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Pre", "Post"),
+                   expand = c(0.15, 0.05)) +
+  scale_fill_viridis_d() +  
+  theme_void()
 ```
 
