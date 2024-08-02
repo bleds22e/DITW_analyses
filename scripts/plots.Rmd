@@ -31,7 +31,8 @@ data <- read_csv("../data/Fall_2023_PrePostMatched_DIW_Deidentified.csv", skip =
          Q17_2_pre = `Q17_2...9`, Q17_2_post = `Q17_2...10`,
          Q17_3_pre = `Q17_3...11`, Q17_3_post = `Q17_3...12`,
          Q17_4_pre = `Q17_4...13`, Q17_4_post = `Q17_4...14`) %>% 
-  select(Q39_pre:Q17_4_post)
+  select(Q39_pre:Q17_4_post) %>% 
+  drop_na()
 glimpse(data)
 ```
 Pull out the questions and save for later.
@@ -60,7 +61,8 @@ data_post <- data %>%
   rename_with(~ str_remove(., "_post"))
 
 data_long <- bind_rows(data_pre, data_post) %>% 
-  mutate(survey = factor(survey, levels = c("Pre", "Post")))
+  mutate(survey = factor(survey, levels = c("Pre", "Post"))) %>% 
+  drop_na()
 head(data_long)
 ```
 
@@ -90,7 +92,29 @@ summary_by_question <- summary_stats %>%
 head(summary_by_question)
 ```
 
-#### Bar Plot
+Stacked bar plots require proportions
+
+```{r}
+prop_data <- data_long %>% 
+  pivot_longer(Q39:Q17_4, names_to = "question", values_to = "response_num") %>% 
+  group_by(survey, question) %>% 
+  mutate(total = n()) %>% 
+  group_by(survey, question, response_num) %>% 
+  mutate(response_count = n(),
+         prop = response_count / total,
+         response_word = case_when(response_num == 5 ~ "Strongly Agree",
+                         response_num == 4 ~ "Somewhat Agree",
+                         response_num == 3 ~ "Neither Agree nor Disagree",
+                         response_num == 2 ~ "Somewhat Disagree",
+                         response_num == 1 ~ "Strongly Disagree"),
+         response_word = factor(response_word, levels = c("Strongly Agree", "Somewhat Agree", "Neither Agree nor Disagree", "Somewhat Disagree", "Strongly Disagree"))) %>% 
+  distinct()
+```
+
+
+#### Question 15
+
+Means
 
 ```{r}
 ggplot(summary_stats, aes(x = survey, y = Q15_mean, color = survey)) +
@@ -106,44 +130,189 @@ ggplot(summary_stats, aes(x = survey, y = Q15_mean, color = survey)) +
         legend.position = "none",
         axis.title = element_text(face = "bold", size = 20),
         axis.text = element_text(size = 14))
+
+ggsave("../plots/Q15_means.png", height = 5, width = 5)
 ```
 
-#### River Plot
-
-River plots connect frequencies of categorical responses
+Stacked Bar Plot
 
 ```{r}
-river_data <- data %>% 
-  select(Q15_pre, Q15_post) %>% 
-  drop_na() %>% 
-  group_by(Q15_pre, Q15_post) %>% 
-  count() %>% 
-  mutate(pre = case_when(Q15_pre == 1 ~ "Very Disinterested",
-                         Q15_pre == 2 ~ "Somewhat Disinterested",
-                         Q15_pre == 3 ~ "Neutral",
-                         Q15_pre == 4 ~ "Somewhat Interested",
-                         Q15_pre == 5 ~ "Very Interested"),
-         post = case_when(Q15_post == 1 ~ "Very Disinterested",
-                         Q15_post == 2 ~ "Somewhat Disinterested",
-                         Q15_post == 3 ~ "Neutral",
-                         Q15_post == 4 ~ "Somewhat Interested",
-                         Q15_post == 5 ~ "Very Interested")) %>% 
-  mutate(pre = factor(pre, levels = c("Very Interested", "Somewhat Interested", "Neutral", "Somewhat Disinterested", "Very Disinterested")),
-         post = factor(post, levels = c("Very Interested", "Somewhat Interested", "Neutral", "Somewhat Disinterested", "Very Disinterested")))
+Q15 <- filter(prop_data, question == "Q15")
+
+ggplot(Q15, aes(x = survey, y = prop, fill = response_word)) +
+  geom_bar(stat = "identity") +
+  scale_fill_viridis_d(direction = 1) +
+  labs(x = "Survey",
+       fill = "Response") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14))
+ggsave("../plots/Q15_stacked.png", width = 7, height = 7)
 ```
 
-Make river plot
+
+#### Question 17_1
+
+Means
 
 ```{r}
-ggplot(river_data, aes(axis1 = pre, axis2 = post, y = n)) +
-  geom_alluvium(aes(fill = post),
-                curve_type = "cubic") +
-  geom_stratum(aes(fill = post)) +
-  geom_text(stat = "stratum",
-            aes(label = after_stat(stratum))) +
-  scale_x_discrete(limits = c("Pre", "Post"),
-                   expand = c(0.15, 0.05)) +
-  scale_fill_viridis_d() +  
-  theme_void()
+ggplot(summary_stats, aes(x = survey, y = Q17_1_mean, color = survey)) +
+  geom_point(size = 5) +
+  geom_errorbar(aes(ymin = Q17_1_mean - Q17_1_sd, ymax = Q17_1_mean + Q17_1_sd), width = 0.2) +
+  geom_text(aes(label = round(Q17_1_mean, 1)), hjust = -0.75, color = "black", fontface = "bold", size = 8) +
+  scale_y_continuous(limits = c(0, 5.5),
+                     breaks = seq(0, 5, by = 1)) +
+  scale_color_viridis_d(direction = -1, begin = 0.1, end = 0.9) +
+  labs(x = "Survey",
+       fill = "Survey") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        legend.position = "none",
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14))
+
+ggsave("../plots/Q17_1_means.png", height = 5, width = 5)
+```
+
+Stacked Bars
+
+```{r}
+Q17_1 <- filter(prop_data, question == "Q17_1")
+
+ggplot(Q17_1, aes(x = survey, y = prop, fill = response_word)) +
+  geom_bar(stat = "identity") +
+  scale_fill_viridis_d(direction = 1) +
+  labs(x = "Survey",
+       fill = "Response") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14))
+
+ggsave("../plots/Q17_1_stacked.png", width = 7, height = 7)
+```
+
+#### Question 17_2
+
+Means
+
+```{r}
+ggplot(summary_stats, aes(x = survey, y = Q17_2_mean, color = survey)) +
+  geom_point(size = 5) +
+  geom_errorbar(aes(ymin = Q17_2_mean - Q17_2_sd, ymax = Q17_2_mean + Q17_2_sd), width = 0.2) +
+  geom_text(aes(label = round(Q17_2_mean, 1)), hjust = -0.75, color = "black", fontface = "bold", size = 8) +
+  scale_y_continuous(limits = c(0, 5.5),
+                     breaks = seq(0, 5, by = 1)) +
+  scale_color_viridis_d(direction = -1, begin = 0.1, end = 0.9) +
+  labs(x = "Survey",
+       fill = "Survey") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        legend.position = "none",
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14))
+
+ggsave("../plots/Q17_2_means.png", height = 5, width = 5)
+```
+
+Stacked Bars
+
+```{r}
+Q17_2 <- filter(prop_data, question == "Q17_2")
+
+ggplot(Q17_2, aes(x = survey, y = prop, fill = response_word)) +
+  geom_bar(stat = "identity") +
+  scale_fill_viridis_d(direction = 1) +
+  labs(x = "Survey",
+       fill = "Response") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14))
+
+ggsave("../plots/Q17_2_stacked.png", width = 7, height = 7)
+```
+
+#### Question 17_3
+
+Means
+
+```{r}
+ggplot(summary_stats, aes(x = survey, y = Q17_3_mean, color = survey)) +
+  geom_point(size = 5) +
+  geom_errorbar(aes(ymin = Q17_3_mean - Q17_3_sd, ymax = Q17_3_mean + Q17_3_sd), width = 0.2) +
+  geom_text(aes(label = round(Q17_3_mean, 1)), hjust = -0.75, color = "black", fontface = "bold", size = 8) +
+  scale_y_continuous(limits = c(0, 5.5),
+                     breaks = seq(0, 5, by = 1)) +
+  scale_color_viridis_d(direction = -1, begin = 0.1, end = 0.9) +
+  labs(x = "Survey",
+       fill = "Survey") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        legend.position = "none",
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14))
+
+ggsave("../plots/Q17_3_means.png", height = 5, width = 5)
+```
+
+Stacked Bars
+
+```{r}
+Q17_3 <- filter(prop_data, question == "Q17_3")
+
+ggplot(Q17_3, aes(x = survey, y = prop, fill = response_word)) +
+  geom_bar(stat = "identity") +
+  scale_fill_viridis_d(direction = 1) +
+  labs(x = "Survey",
+       fill = "Response") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14))
+
+ggsave("../plots/Q17_3_stacked.png", width = 7, height = 7)
+```
+
+#### Question 17_4
+
+Means
+
+```{r}
+ggplot(summary_stats, aes(x = survey, y = Q17_4_mean, color = survey)) +
+  geom_point(size = 5) +
+  geom_errorbar(aes(ymin = Q17_4_mean - Q17_4_sd, ymax = Q17_4_mean + Q17_4_sd), width = 0.2) +
+  geom_text(aes(label = round(Q17_4_mean, 1)), hjust = -0.75, color = "black", fontface = "bold", size = 8) +
+  scale_y_continuous(limits = c(0, 5.5),
+                     breaks = seq(0, 5, by = 1)) +
+  scale_color_viridis_d(direction = -1, begin = 0.1, end = 0.9) +
+  labs(x = "Survey",
+       fill = "Survey") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        legend.position = "none",
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14))
+
+ggsave("../plots/Q17_4_means.png", height = 5, width = 5)
+```
+
+Stacked Bars
+
+```{r}
+Q17_4 <- filter(prop_data, question == "Q17_4")
+
+ggplot(Q17_4, aes(x = survey, y = prop, fill = response_word)) +
+  geom_bar(stat = "identity") +
+  scale_fill_viridis_d(direction = 1) +
+  labs(x = "Survey",
+       fill = "Response") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14))
+
+ggsave("../plots/Q17_4_stacked.png", width = 7, height = 7)
 ```
 
