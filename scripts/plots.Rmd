@@ -156,7 +156,13 @@ ggsave("../plots/Q15_means.png", height = 3.5, width = 4)
 Stacked Bar Plot
 
 ```{r}
-Q15 <- filter(prop_data, question == "Q15")
+Q15 <- filter(prop_data, question == "Q15") %>% 
+  mutate(response_word = case_when(response_num == 5 ~ "Very Interested",
+                         response_num == 4 ~ "Slightly Interested",
+                         response_num == 3 ~ "Neither Interested nor Disinterested",
+                         response_num == 2 ~ "Slightly Disinterested",
+                         response_num == 1 ~ "Very Disinterested"),
+         response_word = factor(response_word, levels = c("Very Interested", "Slightly Interested", "Neither Interested nor Disinterested", "Slightly Disinterested", "Very Disinterested")))
 
 ggplot(Q15, aes(x = survey, y = prop, fill = response_word)) +
   geom_bar(stat = "identity") +
@@ -168,7 +174,7 @@ ggplot(Q15, aes(x = survey, y = prop, fill = response_word)) +
         axis.title = element_text(face = "bold", size = 20),
         axis.text = element_text(size = 14),
         legend.position = "left")
-ggsave("../plots/Q15_stacked.png", width = 6, height = 6)
+ggsave("../plots/Q15_stacked.png", width = 6.5, height = 6)
 ```
 
 
@@ -212,9 +218,9 @@ ggplot(Q17_1, aes(x = survey, y = prop, fill = response_word)) +
   theme(axis.title.y = element_blank(),
         axis.title = element_text(face = "bold", size = 20),
         axis.text = element_text(size = 14),
-        legend.position = "none")
+        legend.position = "left")
 
-ggsave("../plots/Q17_1_stacked.png", width = 4.5, height = 6)
+ggsave("../plots/Q17_1_stacked.png", width = 6.5, height = 6)
 ```
 
 #### Question 17_2
