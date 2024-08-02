@@ -65,6 +65,22 @@ data_long <- bind_rows(data_pre, data_post) %>%
   drop_na()
 head(data_long)
 ```
+### t-tests
+
+Series of quick t-tests to get p-values
+
+```{r}
+ttest_results <- data_long %>% 
+  pivot_longer(Q39:Q17_4, names_to = "question", values_to = "response_num") %>% 
+  group_by(question) %>% 
+  nest() %>% 
+  mutate(ttests = map(.x=data, ~tidy(pairwise.t.test(.x$response_num, .x$survey, paired = TRUE, p.adjust.method = "none")))) %>%  
+  unnest(ttests) %>% 
+  select(-data)
+ttest_results
+
+#write_csv(ttest_results, "../data/ttest_results.csv")
+```
 
 ### Plots
 
@@ -117,12 +133,15 @@ prop_data <- data_long %>%
 Means
 
 ```{r}
+p_value <- pull(filter(ttest_results, question == "Q15"), p.value)
+
 ggplot(summary_stats, aes(x = survey, y = Q15_mean, color = survey)) +
   geom_point(size = 5) +
   geom_errorbar(aes(ymin = Q15_mean - Q15_sd, ymax = Q15_mean + Q15_sd), width = 0.2) +
   geom_text(aes(label = round(Q15_mean, 1)), hjust = -0.75, color = "black", fontface = "bold", size = 8) +
+  annotate("text", x = Inf, y = Inf, label = paste("p = ", round(p_value, 2)), hjust = 1.1, vjust = 1.1, size = 6, fontface = "italic") +
   scale_y_continuous(limits = c(0, 5)) +
-  scale_color_viridis_d(direction = -1, begin = 0.1, end = 0.9) +
+  scale_color_viridis_d(direction = 1, begin = 0, end = 0) +
   labs(x = "Survey",
        fill = "Survey") +
   theme_classic() +
@@ -131,7 +150,7 @@ ggplot(summary_stats, aes(x = survey, y = Q15_mean, color = survey)) +
         axis.title = element_text(face = "bold", size = 20),
         axis.text = element_text(size = 14))
 
-ggsave("../plots/Q15_means.png", height = 5, width = 5)
+ggsave("../plots/Q15_means.png", height = 3.5, width = 4)
 ```
 
 Stacked Bar Plot
@@ -147,8 +166,9 @@ ggplot(Q15, aes(x = survey, y = prop, fill = response_word)) +
   theme_classic() +
   theme(axis.title.y = element_blank(),
         axis.title = element_text(face = "bold", size = 20),
-        axis.text = element_text(size = 14))
-ggsave("../plots/Q15_stacked.png", width = 7, height = 7)
+        axis.text = element_text(size = 14),
+        legend.position = "left")
+ggsave("../plots/Q15_stacked.png", width = 6, height = 6)
 ```
 
 
@@ -157,13 +177,16 @@ ggsave("../plots/Q15_stacked.png", width = 7, height = 7)
 Means
 
 ```{r}
+p_value <- pull(filter(ttest_results, question == "Q17_1"), p.value)
+
 ggplot(summary_stats, aes(x = survey, y = Q17_1_mean, color = survey)) +
   geom_point(size = 5) +
   geom_errorbar(aes(ymin = Q17_1_mean - Q17_1_sd, ymax = Q17_1_mean + Q17_1_sd), width = 0.2) +
   geom_text(aes(label = round(Q17_1_mean, 1)), hjust = -0.75, color = "black", fontface = "bold", size = 8) +
+  annotate("text", x = Inf, y = Inf, label = paste("p = ", round(p_value, 2)), hjust = 1.1, vjust = 1.1, size = 6, fontface = "italic") +
   scale_y_continuous(limits = c(0, 5.5),
                      breaks = seq(0, 5, by = 1)) +
-  scale_color_viridis_d(direction = -1, begin = 0.1, end = 0.9) +
+  scale_color_viridis_d(direction = 1, begin = 0, end = 0) +
   labs(x = "Survey",
        fill = "Survey") +
   theme_classic() +
@@ -172,7 +195,7 @@ ggplot(summary_stats, aes(x = survey, y = Q17_1_mean, color = survey)) +
         axis.title = element_text(face = "bold", size = 20),
         axis.text = element_text(size = 14))
 
-ggsave("../plots/Q17_1_means.png", height = 5, width = 5)
+ggsave("../plots/Q17_1_means.png", height = 3.5, width = 4)
 ```
 
 Stacked Bars
@@ -188,9 +211,10 @@ ggplot(Q17_1, aes(x = survey, y = prop, fill = response_word)) +
   theme_classic() +
   theme(axis.title.y = element_blank(),
         axis.title = element_text(face = "bold", size = 20),
-        axis.text = element_text(size = 14))
+        axis.text = element_text(size = 14),
+        legend.position = "none")
 
-ggsave("../plots/Q17_1_stacked.png", width = 7, height = 7)
+ggsave("../plots/Q17_1_stacked.png", width = 4.5, height = 6)
 ```
 
 #### Question 17_2
@@ -198,22 +222,23 @@ ggsave("../plots/Q17_1_stacked.png", width = 7, height = 7)
 Means
 
 ```{r}
+p_value <- pull(filter(ttest_results, question == "Q17_2"), p.value)
+
 ggplot(summary_stats, aes(x = survey, y = Q17_2_mean, color = survey)) +
   geom_point(size = 5) +
   geom_errorbar(aes(ymin = Q17_2_mean - Q17_2_sd, ymax = Q17_2_mean + Q17_2_sd), width = 0.2) +
   geom_text(aes(label = round(Q17_2_mean, 1)), hjust = -0.75, color = "black", fontface = "bold", size = 8) +
+ annotate("text", x = Inf, y = Inf, label = paste("p = ", round(p_value, 2)), hjust = 1.1, vjust = 1.1, size = 6, fontface = "italic") +
   scale_y_continuous(limits = c(0, 5.5),
                      breaks = seq(0, 5, by = 1)) +
-  scale_color_viridis_d(direction = -1, begin = 0.1, end = 0.9) +
-  labs(x = "Survey",
-       fill = "Survey") +
+  scale_color_viridis_d(direction = 1, begin = 0, end = 0) +
   theme_classic() +
   theme(axis.title.y = element_blank(),
         legend.position = "none",
         axis.title = element_text(face = "bold", size = 20),
         axis.text = element_text(size = 14))
 
-ggsave("../plots/Q17_2_means.png", height = 5, width = 5)
+ggsave("../plots/Q17_2_means.png", height = 3.5, width = 4)
 ```
 
 Stacked Bars
@@ -229,9 +254,10 @@ ggplot(Q17_2, aes(x = survey, y = prop, fill = response_word)) +
   theme_classic() +
   theme(axis.title.y = element_blank(),
         axis.title = element_text(face = "bold", size = 20),
-        axis.text = element_text(size = 14))
+        axis.text = element_text(size = 14),
+        legend.position = "none")
 
-ggsave("../plots/Q17_2_stacked.png", width = 7, height = 7)
+ggsave("../plots/Q17_2_stacked.png", width = 4.5, height = 6)
 ```
 
 #### Question 17_3
@@ -239,13 +265,16 @@ ggsave("../plots/Q17_2_stacked.png", width = 7, height = 7)
 Means
 
 ```{r}
+p_value <- pull(filter(ttest_results, question == "Q17_3"), p.value)
+
 ggplot(summary_stats, aes(x = survey, y = Q17_3_mean, color = survey)) +
   geom_point(size = 5) +
   geom_errorbar(aes(ymin = Q17_3_mean - Q17_3_sd, ymax = Q17_3_mean + Q17_3_sd), width = 0.2) +
   geom_text(aes(label = round(Q17_3_mean, 1)), hjust = -0.75, color = "black", fontface = "bold", size = 8) +
+  annotate("text", x = Inf, y = Inf, label = paste("p = ", round(p_value, 2)), hjust = 1.1, vjust = 1.1, size = 6, fontface = "italic") +
   scale_y_continuous(limits = c(0, 5.5),
                      breaks = seq(0, 5, by = 1)) +
-  scale_color_viridis_d(direction = -1, begin = 0.1, end = 0.9) +
+  scale_color_viridis_d(direction = 1, begin = 0, end = 0) +
   labs(x = "Survey",
        fill = "Survey") +
   theme_classic() +
@@ -254,7 +283,7 @@ ggplot(summary_stats, aes(x = survey, y = Q17_3_mean, color = survey)) +
         axis.title = element_text(face = "bold", size = 20),
         axis.text = element_text(size = 14))
 
-ggsave("../plots/Q17_3_means.png", height = 5, width = 5)
+ggsave("../plots/Q17_3_means.png", height = 3.5, width = 4)
 ```
 
 Stacked Bars
@@ -270,9 +299,10 @@ ggplot(Q17_3, aes(x = survey, y = prop, fill = response_word)) +
   theme_classic() +
   theme(axis.title.y = element_blank(),
         axis.title = element_text(face = "bold", size = 20),
-        axis.text = element_text(size = 14))
+        axis.text = element_text(size = 14),
+        legend.position = "none")
 
-ggsave("../plots/Q17_3_stacked.png", width = 7, height = 7)
+ggsave("../plots/Q17_3_stacked.png", width = 4.5, height = 6)
 ```
 
 #### Question 17_4
@@ -280,13 +310,16 @@ ggsave("../plots/Q17_3_stacked.png", width = 7, height = 7)
 Means
 
 ```{r}
+p_value <- pull(filter(ttest_results, question == "Q17_4"), p.value)
+
 ggplot(summary_stats, aes(x = survey, y = Q17_4_mean, color = survey)) +
   geom_point(size = 5) +
   geom_errorbar(aes(ymin = Q17_4_mean - Q17_4_sd, ymax = Q17_4_mean + Q17_4_sd), width = 0.2) +
   geom_text(aes(label = round(Q17_4_mean, 1)), hjust = -0.75, color = "black", fontface = "bold", size = 8) +
+  annotate("text", x = Inf, y = Inf, label = paste("p = ", round(p_value, 2)), hjust = 1.1, vjust = 1.1, size = 6, fontface = "italic") +
   scale_y_continuous(limits = c(0, 5.5),
                      breaks = seq(0, 5, by = 1)) +
-  scale_color_viridis_d(direction = -1, begin = 0.1, end = 0.9) +
+  scale_color_viridis_d(direction = 1, begin = 0, end = 0) +
   labs(x = "Survey",
        fill = "Survey") +
   theme_classic() +
@@ -295,7 +328,7 @@ ggplot(summary_stats, aes(x = survey, y = Q17_4_mean, color = survey)) +
         axis.title = element_text(face = "bold", size = 20),
         axis.text = element_text(size = 14))
 
-ggsave("../plots/Q17_4_means.png", height = 5, width = 5)
+ggsave("../plots/Q17_4_means.png", height = 3.5, width = 4)
 ```
 
 Stacked Bars
@@ -311,25 +344,11 @@ ggplot(Q17_4, aes(x = survey, y = prop, fill = response_word)) +
   theme_classic() +
   theme(axis.title.y = element_blank(),
         axis.title = element_text(face = "bold", size = 20),
-        axis.text = element_text(size = 14))
+        axis.text = element_text(size = 14),
+        legend.position = "none")
 
-ggsave("../plots/Q17_4_stacked.png", width = 7, height = 7)
+ggsave("../plots/Q17_4_stacked.png", width = 4.5, height = 6)
 ```
 
-### t-tests
 
-Series of quick t-tests to get p-values
-
-```{r}
-ttest_results <- data_long %>% 
-  pivot_longer(Q39:Q17_4, names_to = "question", values_to = "response_num") %>% 
-  group_by(question) %>% 
-  nest() %>% 
-  mutate(ttests = map(.x=data, ~tidy(pairwise.t.test(.x$response_num, .x$survey, paired = TRUE, p.adjust.method = "none")))) %>%  
-  unnest(ttests) %>% 
-  select(-data)
-ttest_results
-
-write_csv(ttest_results, "../data/ttest_results.csv")
-```
 
