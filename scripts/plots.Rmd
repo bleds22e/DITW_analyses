@@ -18,7 +18,7 @@ This document is for making plots based on pre- and post-surveys from the Fall 2
 Load `tidyverse`
 ```{r}
 library(tidyverse)
-library(ggalluvial)
+library(broom)
 ```
 
 Data were compiled and sent over by Jill Williams
@@ -314,5 +314,22 @@ ggplot(Q17_4, aes(x = survey, y = prop, fill = response_word)) +
         axis.text = element_text(size = 14))
 
 ggsave("../plots/Q17_4_stacked.png", width = 7, height = 7)
+```
+
+### t-tests
+
+Series of quick t-tests to get p-values
+
+```{r}
+ttest_results <- data_long %>% 
+  pivot_longer(Q39:Q17_4, names_to = "question", values_to = "response_num") %>% 
+  group_by(question) %>% 
+  nest() %>% 
+  mutate(ttests = map(.x=data, ~tidy(pairwise.t.test(.x$response_num, .x$survey, paired = TRUE, p.adjust.method = "none")))) %>%  
+  unnest(ttests) %>% 
+  select(-data)
+ttest_results
+
+write_csv(ttest_results, "../data/ttest_results.csv")
 ```
 
