@@ -1,2 +1,3 @@
-# ESA2024-poster-DITW
-Script and plots for a poster about Data in the Wild at ESA 2024
+# DITW Analyses
+Repository for scripts, data, figures, etc. for posters and presentations related to the Data in the Wild class taught at the University of Arizona.
+
