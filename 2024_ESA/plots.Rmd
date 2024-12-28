@@ -24,7 +24,7 @@ library(broom)
 Data were compiled and sent over by Jill Williams
 
 ```{r}
-data <- read_csv("../data/Fall_2023_PrePostMatched_DIW_Deidentified.csv", skip = 2) %>% 
+data <- read_csv("data/Fall_2023_PrePostMatched_DIW_Deidentified.csv", skip = 2) %>% 
   rename(Q39_pre = `Q39...3`, Q39_post = `Q39...4`,
          Q15_pre = `Q15...5`, Q15_post = `Q15...6`,
          Q17_1_pre = `Q17_1...7`, Q17_1_post = `Q17_1...8`,
