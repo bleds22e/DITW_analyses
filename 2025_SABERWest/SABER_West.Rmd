@@ -10,3 +10,32 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # SABER West Analyses
+
+## Data Wrangling
+
+Load the `tidyverse`
+```{r}
+library(tidyverse)
+```
+
+Read in the datasets: one for pre-surveys and one for post-surveys.
+```{r}
+# remove first 2 rows
+pre <- read_csv("data/presurveys.csv") %>% 
+  slice(-c(1:2)) %>% 
+  rename(Institution = Q1, Term = Q42) 
+
+post <- read_csv("data/postsurveys.csv") %>% 
+  slice(-c(1:2)) %>% 
+  select(-1) %>% 
+  rename(Institution = Q1, Term = Q70)
+```
+Join datasets
+```{r}
+all <- bind_rows(pre, post, .id = "Survey") %>% 
+  drop_na() %>% 
+  mutate(Survey = if_else(Survey == 1, "Pre", "Post"))
+```
+
+
+## Plotting
