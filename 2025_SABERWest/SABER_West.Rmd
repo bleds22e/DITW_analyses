@@ -16,6 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 Load the `tidyverse`
 ```{r}
 library(tidyverse)
+library(broom)
 ```
 
 Read in the datasets: one for pre-surveys and one for post-surveys.
@@ -32,10 +33,98 @@ post <- read_csv("data/postsurveys.csv") %>%
 ```
 Join datasets
 ```{r}
+# join datasets and create a column for pre- vs. post-survey
 all <- bind_rows(pre, post, .id = "Survey") %>% 
   drop_na() %>% 
-  mutate(Survey = if_else(Survey == 1, "Pre", "Post"))
+  mutate(Survey = if_else(Survey == 1, "Pre", "Post"),
+         Survey = factor(Survey, levels = c("Pre", "Post")))
+```
+
+Convert Data to Long Form
+```{r}
+# long-form data and add numbers for Likert scale
+all <- all %>% 
+  pivot_longer(cols = Q15:Q17_4, names_to = "Question", values_to = "Response_Words") %>% 
+  mutate(Response_Numbers = if_else(Question == "Q15",
+                                    case_when(Response_Words == "Extremely interested" ~ 5,
+                                              Response_Words == "Very interested" ~ 4,
+                                              Response_Words == "Moderately interested" ~ 3,
+                                              Response_Words == "Slightly interested" ~ 2,
+                                              Response_Words == "Not interested at all" ~ 1),
+                                    case_when(Response_Words == "Strongly agree" ~ 5,
+                                              Response_Words == "Somewhat agree" ~ 4,
+                                              Response_Words == "Neither agree nor disagree" ~ 3,
+                                              Response_Words == "Somewhat disagree" ~ 2,
+                                              Response_Words == "Strongly disagree" ~ 1)),
+         Response_Words = case_when(Response_Words == "Extremely interested" ~ "Extremely Interested",
+                                    Response_Words == "Very interested" ~ "Very Interested",
+                                    Response_Words == "Moderately interested" ~ "Moderately Interested",
+                                    Response_Words == "Slightly interested" ~ "Slightly Interested",
+                                    Response_Words == "Not interested at all" ~ "Not Interested At All",
+                                    Response_Words == "Strongly agree" ~ "Strongly Agree",
+                                    Response_Words == "Somewhat agree" ~ "Somewhat Agree",
+                                    Response_Words == "Neither agree nor disagree" ~ "Neither Agree nor Disagree",
+                                    Response_Words == "Somewhat disagree" ~ "Somewhat Disagree",
+                                    Response_Words == "Strongly disagree" ~ "Strongly Disagree"))
+
+```
+
+Calculate proportions for plotting
+
+```{r}
+# create grid with every possible combo of Survey, Question and Response
+full_grid <- expand_grid(Survey = unique(all$Survey),
+                         Question = unique(all$Question),
+                         Response_Words = unique(all$Response_Words)) %>% 
+  filter((Question == "Q15" & str_detect(Response_Words, "Interest")) | 
+            (Question != "Q15" & !str_detect(Response_Words, "Interest")))
+
+# calculate proportions for each answer
+prop_data <- all %>% 
+  # create column for number of total responses
+  group_by(Survey, Question) %>% 
+  mutate(Total = n()) %>% 
+  # create columns for number of responses per category and proportion
+  group_by(Survey, Question, Response_Words) %>% 
+  mutate(Response_Count = n(),
+         Prop = Response_Count / Total) %>% 
+  # join with full_grid dataframe to include rows for missing response combos (did I need to?)
+  full_join(., full_grid) %>% 
+  # arrange them to more easily see responses
+  distinct(across(.cols = c(Response_Words, Response_Numbers, Prop, Response_Count, Total))) %>% 
+  arrange(Survey, Question, Response_Numbers)
+```
+
+Perform t-tests
+
+```{r}
+t_tests <- all %>% 
+  group_by(Question) %>% 
+  nest() %>% 
+  mutate(ttests = map(.x = data, ~tidy(pairwise.t.test(.x$Response_Numbers, .x$Survey, p.adjust.method = "none")))) %>%  
+  unnest(ttests) %>% 
+  select(-data)
 ```
 
 
 ## Plotting
+
+### Proportion Data
+
+Plotting Question 15
+```{r}
+Q15 <- filter(prop_data, Question == "Q15") %>% 
+  mutate(Response_Words = factor(Response_Words, levels = c("Extremely Interested", "Very Interested", "Moderately Interested", "Slightly Interested", "Not Interested At All")))
+
+ggplot(Q15, aes(x = Survey, y = Prop, fill = Response_Words)) +
+  geom_bar(stat = "identity") +
+  scale_fill_viridis_d(direction = 1) +
+  labs(x = "Survey",
+       fill = "Response") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14),
+        legend.position = "left")
+```
+
