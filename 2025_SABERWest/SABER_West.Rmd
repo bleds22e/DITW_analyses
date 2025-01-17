@@ -100,12 +100,26 @@ Perform t-tests
 ```{r}
 t_tests <- all %>% 
   group_by(Question) %>% 
+  mutate(Survey = as.character(Survey)) %>% 
   nest() %>% 
-  mutate(ttests = map(.x = data, ~tidy(pairwise.t.test(.x$Response_Numbers, .x$Survey, p.adjust.method = "none")))) %>%  
+  mutate(ttests = map(.x = data, ~tidy(t.test(.x$Response_Numbers ~ .x$Survey)))) %>%  
   unnest(ttests) %>% 
   select(-data)
 ```
+Make plots for each question.
 
+Bar plots and river plots?
+
+Bar plots should have the average pre vs. post values with sd values
+
+```{r}
+summary_stats <- all %>% 
+  group_by(Question, Survey) %>% 
+  summarise(across(where(is.numeric), 
+                   list(mean = ~ mean(., na.rm = TRUE),
+                        sd = ~ sd(., na.rm = TRUE)))) 
+summary_stats
+```
 
 ## Plotting
 
@@ -126,5 +140,222 @@ ggplot(Q15, aes(x = Survey, y = Prop, fill = Response_Words)) +
         axis.title = element_text(face = "bold", size = 20),
         axis.text = element_text(size = 14),
         legend.position = "left")
+
+ggsave("plots/Q15_stacked.png", width = 7, height = 6)
+```
+
+Add factor levels to Q17s
+```{r}
+prop_data <- filter(prop_data, Question != "Q15") %>% 
+  mutate(Response_Words = factor(Response_Words, levels = c("Strongly Agree", "Somewhat Agree", "Neither Agree nor Disagree", "Somewhat Disagree", "Strongly Disagree")))
+```
+
+
+Q17_1
+
+```{r}
+Q17_1 <- filter(prop_data, Question == "Q17_1")
+
+ggplot(Q17_1, aes(x = Survey, y = Prop, fill = Response_Words)) +
+  geom_bar(stat = "identity") +
+  scale_fill_viridis_d(direction = 1) +
+  labs(x = "Survey",
+       fill = "Response") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14),
+        legend.position = "left")
+
+ggsave("plots/Q17_1_stacked.png", width = 6.5, height = 6)
+```
+
+Q17_2
+
+```{r}
+Q17_2 <- filter(prop_data, Question == "Q17_2")
+
+ggplot(Q17_2, aes(x = Survey, y = Prop, fill = Response_Words)) +
+  geom_bar(stat = "identity") +
+  scale_fill_viridis_d(direction = 1) +
+  labs(x = "Survey",
+       fill = "Response") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14),
+        legend.position = "none")
+
+ggsave("plots/Q17_2_stacked.png", width = 4.5, height = 6)
+```
+Q17_3
+
+```{r}
+Q17_3 <- filter(prop_data, Question == "Q17_3")
+
+ggplot(Q17_3, aes(x = Survey, y = Prop, fill = Response_Words)) +
+  geom_bar(stat = "identity") +
+  scale_fill_viridis_d(direction = 1) +
+  labs(x = "Survey",
+       fill = "Response") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14),
+        legend.position = "none")
+
+ggsave("plots/Q17_3_stacked.png", width = 4.5, height = 6)
+```
+
+Q17_4
+
+```{r}
+Q17_4 <- filter(prop_data, Question == "Q17_4")
+
+ggplot(Q17_4, aes(x = Survey, y = Prop, fill = Response_Words)) +
+  geom_bar(stat = "identity") +
+  scale_fill_viridis_d(direction = 1) +
+  labs(x = "Survey",
+       fill = "Response") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14),
+        legend.position = "none")
+
+ggsave("plots/Q17_4_stacked.png", width = 4.5, height = 6)
+```
+
+### Means
+
+Q15
+
+```{r}
+p_value <- pull(filter(t_tests, Question == "Q15"), p.value)
+Q15 <- filter(summary_stats, Question == "Q15")
+
+ggplot(Q15, aes(x = Survey, y = Response_Numbers_mean, color = Survey)) +
+  geom_point(size = 5) +
+  geom_errorbar(aes(ymin = Response_Numbers_mean - Response_Numbers_sd, 
+                    ymax = Response_Numbers_mean + Response_Numbers_sd), width = 0.2) +
+  geom_text(aes(label = round(Response_Numbers_mean, 1), hjust = -0.75, color = "black", fontface = "bold", size = 8)) +
+  annotate("text", x = Inf, y = Inf, label = "p < 0.01", hjust = 1.25, vjust = 16, size = 5, fontface = "italic") +
+  scale_y_continuous(limits = c(0, 5)) +
+  scale_color_viridis_d(direction = 1, begin = 0, end = 0) +
+  labs(x = "Survey",
+       fill = "Survey") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        legend.position = "none",
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14))
+
+ggsave("plots/Q15_means.png", height = 3, width = 4)
+```
+
+Q17_1
+
+```{r}
+p_value <- pull(filter(t_tests, Question == "Q17_1"), p.value)
+Q17_1 <- filter(summary_stats, Question == "Q17_1")
+
+ggplot(Q17_1, aes(x = Survey, y = Response_Numbers_mean, color = Survey)) +
+  geom_point(size = 5) +
+  geom_errorbar(aes(ymin = Response_Numbers_mean - Response_Numbers_sd, 
+                    ymax = Response_Numbers_mean + Response_Numbers_sd), width = 0.2) +
+  geom_text(aes(label = round(Response_Numbers_mean, 1)), hjust = -0.75, color = "black", fontface = "bold", size = 8) +
+  annotate("text", x = Inf, y = Inf, label = paste("p = ", round(p_value, 2)), hjust = 1.25, vjust = 16, size = 5, fontface = "italic") +
+  scale_y_continuous(limits = c(0, 5.5),
+                     breaks = seq(0, 5, by = 1)) +
+  scale_color_viridis_d(direction = 1, begin = 0, end = 0) +
+  labs(x = "Survey",
+       fill = "Survey") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        legend.position = "none",
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14))
+
+ggsave("plots/Q17_1_means.png", height = 3, width = 4)
+```
+
+Q17_2
+
+```{r}
+p_value <- pull(filter(t_tests, Question == "Q17_2"), p.value)
+Q17_2 <- filter(summary_stats, Question == "Q17_2")
+
+ggplot(Q17_2, aes(x = Survey, y = Response_Numbers_mean, color = Survey)) +
+  geom_point(size = 5) +
+  geom_errorbar(aes(ymin = Response_Numbers_mean - Response_Numbers_sd, 
+                    ymax = Response_Numbers_mean + Response_Numbers_sd), width = 0.2) +
+  geom_text(aes(label = round(Response_Numbers_mean, 1)), hjust = -0.75, color = "black", fontface = "bold", size = 8) +
+ annotate("text", x = Inf, y = Inf, label = paste("p = ", round(p_value, 2)), hjust = 1.25, vjust = 16, size = 5, fontface = "italic") +
+  scale_y_continuous(limits = c(0, 5.5),
+                     breaks = seq(0, 5, by = 1)) +
+  scale_color_viridis_d(direction = 1, begin = 0, end = 0) +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        legend.position = "none",
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14))
+
+ggsave("plots/Q17_2_means.png", height = 3, width = 4)
+```
+
+Q17_3
+
+```{r}
+p_value <- pull(filter(t_tests, Question == "Q17_3"), p.value)
+Q17_3 <- filter(summary_stats, Question == "Q17_3")
+
+ggplot(Q17_3, aes(x = Survey, y = Response_Numbers_mean, color = Survey)) +
+  geom_point(size = 5) +
+  geom_errorbar(aes(ymin = Response_Numbers_mean - Response_Numbers_sd, 
+                    ymax = Response_Numbers_mean + Response_Numbers_sd), width = 0.2) +
+  geom_text(aes(label = round(Response_Numbers_mean, 1)), hjust = -0.75, color = "black", fontface = "bold", size = 8) +
+  annotate("text", x = Inf, y = Inf, label = paste("p = ", round(p_value, 2)), hjust = 1.25, vjust = 16, size = 5, fontface = "italic") +
+  scale_y_continuous(limits = c(0, 5.5),
+                     breaks = seq(0, 5, by = 1)) +
+  scale_color_viridis_d(direction = 1, begin = 0, end = 0) +
+  labs(x = "Survey",
+       fill = "Survey") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        legend.position = "none",
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14))
+
+ggsave("plots/Q17_3_means.png", height = 3, width = 4)
+```
+Q17_4
+
+```{r}
+p_value <- pull(filter(t_tests, Question == "Q17_4"), p.value)
+Q17_4 <- filter(summary_stats, Question == "Q17_4")
+
+ggplot(Q17_4, aes(x = Survey, y = Response_Numbers_mean, color = Survey)) +
+  geom_point(size = 5) +
+  geom_errorbar(aes(ymin = Response_Numbers_mean - Response_Numbers_sd, 
+                    ymax = Response_Numbers_mean + Response_Numbers_sd), width = 0.2) +
+  geom_text(aes(label = round(Response_Numbers_mean, 1)), hjust = -0.75, color = "black", fontface = "bold", size = 8) +
+  annotate("text", x = Inf, y = Inf, label = paste("p = ", round(p_value, 2)), hjust = 1.25, vjust = 16, size = 5, fontface = "italic") +
+  scale_y_continuous(limits = c(0, 5.5),
+                     breaks = seq(0, 5, by = 1)) +
+  scale_color_viridis_d(direction = 1, begin = 0, end = 0) +
+  labs(x = "Survey",
+       fill = "Survey") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        legend.position = "none",
+        axis.title = element_text(face = "bold", size = 20),
+        axis.text = element_text(size = 14))
+
+ggsave("plots/Q17_4_means.png", height = 3, width = 4)
 ```
 
