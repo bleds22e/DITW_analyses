@@ -128,7 +128,7 @@ summary_stats
 Plotting Question 15
 ```{r}
 Q15 <- filter(prop_data, Question == "Q15") %>% 
-  mutate(Response_Words = factor(Response_Words, levels = c("Extremely Interested", "Very Interested", "Moderately Interested", "Slightly Interested", "Not Interested At All")))
+  mutate(Response_Words = factor(Response_Words, levels = c("Extremely Interested", "Very Interested", "Moderately Interested", "Slightly Interested", "Not Interested At All"))) 
 
 ggplot(Q15, aes(x = Survey, y = Prop, fill = Response_Words)) +
   geom_bar(stat = "identity") +
@@ -141,7 +141,7 @@ ggplot(Q15, aes(x = Survey, y = Prop, fill = Response_Words)) +
         axis.text = element_text(size = 14),
         legend.position = "left")
 
-ggsave("plots/Q15_stacked.png", width = 7, height = 6)
+ggsave("plots/Q15_stacked.png", width = 6, height = 6)
 ```
 
 Add factor levels to Q17s
@@ -238,7 +238,7 @@ ggplot(Q15, aes(x = Survey, y = Response_Numbers_mean, color = Survey)) +
   geom_point(size = 5) +
   geom_errorbar(aes(ymin = Response_Numbers_mean - Response_Numbers_sd, 
                     ymax = Response_Numbers_mean + Response_Numbers_sd), width = 0.2) +
-  geom_text(aes(label = round(Response_Numbers_mean, 1), hjust = -0.75, color = "black", fontface = "bold", size = 8)) +
+  geom_text(aes(label = round(Response_Numbers_mean, 1)), hjust = -0.75, color = "black", fontface = "bold", size = 8) +
   annotate("text", x = Inf, y = Inf, label = "p < 0.01", hjust = 1.25, vjust = 16, size = 5, fontface = "italic") +
   scale_y_continuous(limits = c(0, 5)) +
   scale_color_viridis_d(direction = 1, begin = 0, end = 0) +
@@ -292,7 +292,7 @@ ggplot(Q17_2, aes(x = Survey, y = Response_Numbers_mean, color = Survey)) +
   geom_errorbar(aes(ymin = Response_Numbers_mean - Response_Numbers_sd, 
                     ymax = Response_Numbers_mean + Response_Numbers_sd), width = 0.2) +
   geom_text(aes(label = round(Response_Numbers_mean, 1)), hjust = -0.75, color = "black", fontface = "bold", size = 8) +
- annotate("text", x = Inf, y = Inf, label = paste("p = ", round(p_value, 2)), hjust = 1.25, vjust = 16, size = 5, fontface = "italic") +
+ annotate("text", x = Inf, y = Inf, label = "p < 0.01", hjust = 1.25, vjust = 16, size = 5, fontface = "italic") +
   scale_y_continuous(limits = c(0, 5.5),
                      breaks = seq(0, 5, by = 1)) +
   scale_color_viridis_d(direction = 1, begin = 0, end = 0) +
