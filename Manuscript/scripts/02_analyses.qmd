@@ -1,0 +1,62 @@
+---
+title: "Data in the Wild--Analyses"
+format: gfm
+execute:
+  message: false
+editor: visual
+---
+
+This document contains the analyses for the Data in the Wild course.
+
+## Packages and Data
+
+Load the packages used in analyses.
+
+```{r}
+#| message: false
+library(tidyverse)
+library(lme4)
+library(lmerTest)
+library(performance)
+```
+
+Read in the cleaned dataset.
+
+```{r}
+data <- read_csv("../data_clean/data_cleaned.csv")
+
+glimpse(data)
+```
+
+## Check Distributions
+
+Look at the distribution of responses by question.
+
+Do these need to be transformed? (e.g., Q17_2, Q17_3, Q39)
+
+```{r}
+data %>% 
+  pivot_longer(starts_with("Q"), 
+               names_to = "Question", 
+               values_to = "Value") %>% 
+  ggplot(aes(Value)) +
+  geom_histogram(aes(fill = Survey_Type), 
+                 position = "identity", alpha = 0.5, bins = 5) +
+  facet_wrap(~ Question, scales = "free_x") +
+  labs(x = "Score",
+       y = "Frequency",
+       fill = "Survey") +
+  theme_bw()
+```
+
+## Run a Linear Model
+
+Run a model for Q39 responses as a function of the survey (pre vs. post). Include student, semester, and university as random effects.
+
+TO DO: Model does not run with all 3 random effects ("singular"). Also does not run with just semester and school. Does not work for either Q39 (very skewed) or Q15 (normal distribution).
+
+```{r}
+model_Q39 <- lmer(Q15 ~ Survey_Type + (1 | Term) + (1 | School), 
+              data = data)
+#summary(model)
+```

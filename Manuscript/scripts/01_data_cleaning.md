@@ -41,6 +41,8 @@ glimpse(data)
     $ ...15 <chr> NA, "Q6", "With which race/ethnicity do you identify? (choose al…
     $ ...16 <chr> NA, "Q1", "Which institution are you enrolled at?", "Lewis and C…
 
+## Data Cleaning
+
 Remove the row with what all the questions are and save them in case we
 need them later.
 
@@ -154,6 +156,8 @@ Convert all of the scale responses to numeric.
 data <- data %>% 
   mutate(across(.cols = starts_with("Q"), .fns = as.numeric))
 ```
+
+## Save Clean Data
 
 Save the cleaned version of the data as a .CSV file.
 

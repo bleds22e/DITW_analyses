@@ -26,6 +26,8 @@ data <- readxl::read_excel("../data_raw/DataInTheWild_PrePost_ForEllen.xlsx",
 glimpse(data)
 ```
 
+## Data Cleaning
+
 Remove the row with what all the questions are and save them in case we need them later.
 
 ```{r}
@@ -90,6 +92,8 @@ Convert all of the scale responses to numeric.
 data <- data %>% 
   mutate(across(.cols = starts_with("Q"), .fns = as.numeric))
 ```
+
+## Save Clean Data
 
 Save the cleaned version of the data as a .CSV file.
 
