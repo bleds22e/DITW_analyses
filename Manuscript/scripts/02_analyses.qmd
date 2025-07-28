@@ -17,28 +17,32 @@ Load the packages used in analyses.
 library(tidyverse)
 library(lme4)
 library(lmerTest)
-library(performance)
+library(broom.mixed)
+library(effectsize)
 ```
 
 Read in the cleaned dataset.
 
 ```{r}
+#| message: false
 data <- read_csv("../data_clean/data_cleaned.csv")
 
-glimpse(data)
+head(data)
 ```
 
 ## Check Distributions
 
 Look at the distribution of responses by question.
 
-Do these need to be transformed? (e.g., Q17_2, Q17_3, Q39)
-
 ```{r}
 data %>% 
+  # reshape the data for plotting
   pivot_longer(starts_with("Q"), 
                names_to = "Question", 
                values_to = "Value") %>% 
+  # reorder "pre" and "post" for plotting
+  mutate(Survey_Type = as_factor(Survey_Type)) %>% 
+  # pipe into a histogram
   ggplot(aes(Value)) +
   geom_histogram(aes(fill = Survey_Type), 
                  position = "identity", alpha = 0.5, bins = 5) +
@@ -49,14 +53,140 @@ data %>%
   theme_bw()
 ```
 
-## Run a Linear Model
+## Run Linear Mixed Effects Models
+
+### Question 39
 
 Run a model for Q39 responses as a function of the survey (pre vs. post). Include student, semester, and university as random effects.
 
-TO DO: Model does not run with all 3 random effects ("singular"). Also does not run with just semester and school. Does not work for either Q39 (very skewed) or Q15 (normal distribution).
+```{r}
+model_Q39 <- lmer(Q39 ~ Survey_Type + (1 | Term) + (1 | School) + (1 | StudentID), 
+              data = data)
+broom.mixed::tidy(model_Q39)
+```
+
+Semester (`Term`) has a variance of 0, which is causing singularity. Let's remove that random effect.
 
 ```{r}
-model_Q39 <- lmer(Q15 ~ Survey_Type + (1 | Term) + (1 | School), 
+model_Q39 <- lmer(Q39 ~ Survey_Type + (1 | School) + (1 | StudentID), 
               data = data)
-#summary(model)
+(output_Q39 <- broom.mixed::tidy(model_Q39))
 ```
+
+This removes warning about singularity, which is great.
+
+\| The p-value is `r round(output_Q39$p.value[2], 2)`, meaning no significant difference.
+
+Let's check the model performance. Q39 answers do not have a normal distribution.
+
+```{r}
+resid_vals <- residuals(model_Q39)
+qqnorm(resid_vals); qqline(resid_vals)
+hist(resid_vals, main = "Histogram of Residuals", xlab = "Residuals")
+```
+
+Residuals aren't great, but aren't horrible, either?
+
+Out of curiosity, what happens when we include the school as a fixed effect? We actually have reason to believe this might make more sense--one class was more computationally focused while another class was more statistically focused
+
+```{r}
+model_Q39 <- lmer(Q39 ~ Survey_Type + School + (1 | StudentID), 
+              data = data)
+broom.mixed::tidy(model_Q39)
+```
+
+This does not change out qualitative result at all.
+
+### Question 15
+
+Let's run the analysis with Question 15. For every question, the variance of semester ends up being 0, so I will pre-emptively remove it.
+
+```{r}
+model_Q15 <- lmer(Q15 ~ Survey_Type + (1 | StudentID) + (1 | School), 
+                  data = data)
+broom.mixed::tidy(model_Q15)
+```
+
+Check the residuals
+
+```{r}
+resid_vals <- residuals(model_Q15)
+qqnorm(resid_vals); qqline(resid_vals)
+hist(resid_vals, main = "Histogram of Residuals", xlab = "Residuals")
+```
+
+### Question 17_1
+
+Let's run the analysis with Question 17_1.
+
+```{r}
+model_Q17_1 <- lmer(Q17_1 ~ Survey_Type + (1 | StudentID) + (1 | School), 
+                  data = data)
+broom.mixed::tidy(model_Q17_1)
+```
+
+Check the residuals
+
+```{r}
+resid_vals <- residuals(model_Q17_1)
+qqnorm(resid_vals); qqline(resid_vals)
+hist(resid_vals, main = "Histogram of Residuals", xlab = "Residuals")
+```
+
+### Question 17_2
+
+```{r}
+model_Q17_2 <- lmer(Q17_2 ~ Survey_Type + (1 | StudentID) + (1 | School), 
+                  data = data)
+broom.mixed::tidy(model_Q17_2)
+```
+
+Check the residuals
+
+```{r}
+resid_vals <- residuals(model_Q17_2)
+qqnorm(resid_vals); qqline(resid_vals)
+hist(resid_vals, main = "Histogram of Residuals", xlab = "Residuals")
+```
+
+### Question 17_3
+
+Let's run the analysis with Question 17_3.
+
+```{r}
+model_Q17_3 <- lmer(Q17_3 ~ Survey_Type + (1 | StudentID) + (1 | School), 
+                  data = data)
+broom.mixed::tidy(model_Q17_3)
+```
+
+Check the residuals
+
+```{r}
+resid_vals <- residuals(model_Q17_3)
+qqnorm(resid_vals); qqline(resid_vals)
+hist(resid_vals, main = "Histogram of Residuals", xlab = "Residuals")
+```
+
+### Question 17_4
+
+Let's run the analysis with Question 17_4.
+
+```{r}
+model_Q17_4 <- lmer(Q17_4 ~ Survey_Type + (1 | StudentID) + (1 | School), 
+                  data = data)
+summary(model_Q17_4)
+```
+
+Check the residuals
+
+```{r}
+resid_vals <- residuals(model_Q17_4)
+qqnorm(resid_vals); qqline(resid_vals)
+hist(resid_vals, main = "Histogram of Residuals", xlab = "Residuals")
+```
+
+TO DO:
+
+-   correct p-values for multiple analyses
+
+-   consider running analyses on absolute values–students learn if they like DS or really don't like DS, which is also fine!
