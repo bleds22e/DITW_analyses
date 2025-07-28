@@ -1,0 +1,275 @@
+StudentID,Term,Gender,Race,School,Survey_Type,Q39,Q15,Q17_1,Q17_2,Q17_3,Q17_4
+1,Fall 2022,Woman,Hispanic or Latinx,Lewis and Clark,Pre,7,1,1,1,2,1
+1,Fall 2022,Woman,Hispanic or Latinx,Lewis and Clark,Post,4,2,2,2,2,2
+2,Fall 2023,Woman,NA,Lewis and Clark,Pre,9,4,4,5,1,3
+2,Fall 2023,Woman,NA,Lewis and Clark,Post,10,4,4,5,5,3
+3,Spring 2023,Woman,White or Caucasian,University of Arizona,Pre,10,3,3,3,5,3
+3,Spring 2023,Woman,White or Caucasian,University of Arizona,Post,9,3,2,5,5,1
+4,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Pre,10,3,3,4,5,4
+4,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Post,10,2,4,4,5,2
+5,Fall 2024,Woman,White or Caucasian,University of Arizona,Pre,9,3,3,4,5,3
+5,Fall 2024,Woman,White or Caucasian,University of Arizona,Post,10,4,4,5,5,3
+6,Fall 2024,Woman,White or Caucasian,University of Arizona,Pre,10,3,3,5,5,2
+6,Fall 2024,Woman,White or Caucasian,University of Arizona,Post,7,3,4,5,5,4
+7,Fall 2024,Woman,White or Caucasian,University of Arizona,Pre,10,4,4,5,5,4
+7,Fall 2024,Woman,White or Caucasian,University of Arizona,Post,9,3,3,5,5,3
+8,Fall 2024,Woman,"Hispanic or Latinx,White or Caucasian",University of Arizona,Pre,10,4,4,3,5,5
+8,Fall 2024,Woman,"Hispanic or Latinx,White or Caucasian",University of Arizona,Post,10,4,4,4,5,5
+9,Spring 2023,Woman,"Hispanic or Latinx,White or Caucasian",University of Arizona,Pre,10,3,4,5,3,3
+9,Spring 2023,Woman,"Hispanic or Latinx,White or Caucasian",University of Arizona,Post,10,3,4,5,5,3
+10,Fall 2024,Woman,White or Caucasian,University of Arizona,Pre,10,3,4,5,5,2
+10,Fall 2024,Woman,White or Caucasian,University of Arizona,Post,10,3,4,5,5,2
+11,Fall 2022,Woman,Asican American or Asian,Lewis and Clark,Pre,9,3,3,4,5,3
+11,Fall 2022,Woman,Asican American or Asian,Lewis and Clark,Post,10,2,3,2,5,2
+12,Fall 2023,Woman,White or Caucasian,Lewis and Clark,Pre,9,3,2,1,3,2
+12,Fall 2023,Woman,White or Caucasian,Lewis and Clark,Post,10,2,2,4,4,1
+13,Fall 2023,Woman,"Hispanic or Latinx,White or Caucasian",University of Arizona,Pre,10,2,1,4,5,1
+13,Fall 2023,Woman,"Hispanic or Latinx,White or Caucasian",University of Arizona,Post,10,1,3,4,5,2
+14,Fall 2023,Man,"Hispanic or Latinx,White or Caucasian",Lewis and Clark,Pre,9,3,3,4,5,2
+14,Fall 2023,Man,"Hispanic or Latinx,White or Caucasian",Lewis and Clark,Post,8,3,4,4,5,5
+15,Fall 2022,Man,I prefer not to answer,University of Arizona,Pre,8,3,3,3,3,3
+15,Fall 2022,Man,I prefer not to answer,University of Arizona,Post,7,3,3,4,3,3
+16,Spring 2024,Man,Hispanic or Latinx,University of Arizona,Pre,7,2,3,3,4,3
+16,Spring 2024,Man,Hispanic or Latinx,University of Arizona,Post,10,4,4,5,5,4
+17,Spring 2024,Prefer to self-identify as,NA,University of Arizona,Pre,9,2,3,5,5,2
+17,Spring 2024,Prefer to self-identify as,NA,University of Arizona,Post,10,3,4,4,5,4
+18,Fall 2022,Man,Hispanic or Latinx,University of Arizona,Pre,8,3,4,3,4,3
+18,Fall 2022,Man,Hispanic or Latinx,University of Arizona,Post,10,3,3,4,3,3
+19,Fall 2023,Man,"Asican American or Asian,White or Caucasian",University of Arizona,Pre,9,5,5,5,5,4
+19,Fall 2023,Man,"Asican American or Asian,White or Caucasian",University of Arizona,Post,10,3,3,4,5,3
+20,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Pre,10,2,3,4,5,3
+20,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Post,9,3,3,4,5,3
+21,Fall 2022,Man,Hispanic or Latinx,University of Arizona,Pre,9,3,3,3,5,3
+21,Fall 2022,Man,Hispanic or Latinx,University of Arizona,Post,10,3,3,4,4,3
+22,Fall 2022,Non-Binary,White or Caucasian,University of Arizona,Pre,10,4,4,4,5,1
+22,Fall 2022,Non-Binary,White or Caucasian,University of Arizona,Post,10,5,5,5,5,5
+23,Fall 2023,Man,Asican American or Asian,Lewis and Clark,Pre,10,3,4,5,5,2
+23,Fall 2023,Man,Asican American or Asian,Lewis and Clark,Post,10,2,2,2,5,1
+24,Spring 2024,Man,"African American or Black,White or Caucasian",University of Arizona,Pre,10,4,4,5,3,3
+24,Spring 2024,Man,"African American or Black,White or Caucasian",University of Arizona,Post,10,3,4,4,4,2
+25,Fall 2024,Man,"Hispanic or Latinx,White or Caucasian",University of Arizona,Pre,10,4,4,4,5,4
+25,Fall 2024,Man,"Hispanic or Latinx,White or Caucasian",University of Arizona,Post,8,3,3,4,4,3
+26,Fall 2022,Woman,African American or Black,Lewis and Clark,Pre,9,2,3,3,4,3
+26,Fall 2022,Woman,African American or Black,Lewis and Clark,Post,9,1,1,1,5,1
+27,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Pre,9,3,2,1,5,1
+27,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Post,10,4,4,5,5,3
+28,Spring 2023,Woman,White or Caucasian,University of Arizona,Pre,10,2,3,5,5,3
+28,Spring 2023,Woman,White or Caucasian,University of Arizona,Post,10,4,4,5,5,4
+29,Spring 2024,Woman,White or Caucasian,University of Arizona,Pre,10,1,1,2,5,1
+29,Spring 2024,Woman,White or Caucasian,University of Arizona,Post,10,1,1,2,5,1
+30,Fall 2022,Non-Binary,"Hispanic or Latinx,White or Caucasian",Lewis and Clark,Pre,9,1,1,2,5,1
+30,Fall 2022,Non-Binary,"Hispanic or Latinx,White or Caucasian",Lewis and Clark,Post,10,1,1,1,5,1
+31,Fall 2022,Woman,Hispanic or Latinx,Lewis and Clark,Pre,10,3,2,2,5,4
+31,Fall 2022,Woman,Hispanic or Latinx,Lewis and Clark,Post,10,1,1,3,4,1
+32,Fall 2023,Man,White or Caucasian,Lewis and Clark,Pre,10,3,3,4,4,3
+32,Fall 2023,Man,White or Caucasian,Lewis and Clark,Post,7,2,3,4,3,2
+33,Fall 2022,Non-Binary,"Asican American or Asian,White or Caucasian",Lewis and Clark,Pre,8,1,2,4,4,3
+33,Fall 2022,Non-Binary,"Asican American or Asian,White or Caucasian",Lewis and Clark,Post,10,2,1,4,5,2
+34,Spring 2023,Man,White or Caucasian,University of Arizona,Pre,10,3,4,4,4,5
+34,Spring 2023,Man,White or Caucasian,University of Arizona,Post,10,3,4,5,5,4
+35,Fall 2023,Woman,NA,Lewis and Clark,Pre,9,3,3,4,5,3
+35,Fall 2023,Woman,NA,Lewis and Clark,Post,6,1,2,3,5,2
+36,Spring 2023,Man,White or Caucasian,University of Arizona,Pre,8,2,2,4,4,1
+36,Spring 2023,Man,White or Caucasian,University of Arizona,Post,10,4,4,5,5,2
+37,Fall 2022,Man,White or Caucasian,Lewis and Clark,Pre,10,2,3,3,3,3
+37,Fall 2022,Man,White or Caucasian,Lewis and Clark,Post,9,3,4,5,5,2
+38,Fall 2023,Man,White or Caucasian,Lewis and Clark,Pre,10,3,4,5,5,4
+38,Fall 2023,Man,White or Caucasian,Lewis and Clark,Post,0,1,1,1,1,1
+39,Spring 2024,Man,White or Caucasian,University of Arizona,Pre,7,3,4,4,3,2
+39,Spring 2024,Man,White or Caucasian,University of Arizona,Post,10,4,4,4,5,5
+40,Fall 2023,Woman,"Hispanic or Latinx,White or Caucasian",Lewis and Clark,Pre,10,3,4,5,5,1
+40,Fall 2023,Woman,"Hispanic or Latinx,White or Caucasian",Lewis and Clark,Post,10,4,5,5,5,5
+41,Fall 2022,Man,White or Caucasian,Lewis and Clark,Pre,7,4,4,4,3,4
+41,Fall 2022,Man,White or Caucasian,Lewis and Clark,Post,9,3,3,5,4,3
+42,Fall 2024,Genderqueer or gender nonconforming,White or Caucasian,University of Arizona,Pre,10,4,4,4,5,3
+42,Fall 2024,Genderqueer or gender nonconforming,White or Caucasian,University of Arizona,Post,10,4,4,5,5,3
+43,Spring 2023,Woman,White or Caucasian,University of Arizona,Pre,8,2,3,5,5,2
+43,Spring 2023,Woman,White or Caucasian,University of Arizona,Post,7,3,3,4,5,3
+44,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Pre,10,3,4,5,5,4
+44,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Post,10,3,3,5,4,2
+45,Spring 2023,Woman,White or Caucasian,University of Arizona,Pre,10,3,3,4,5,4
+45,Spring 2023,Woman,White or Caucasian,University of Arizona,Post,10,4,5,5,5,4
+46,Spring 2024,Woman,"Hispanic or Latinx,White or Caucasian",University of Arizona,Pre,9,3,5,4,4,5
+46,Spring 2024,Woman,"Hispanic or Latinx,White or Caucasian",University of Arizona,Post,10,4,5,5,5,5
+47,Fall 2023,Genderqueer or gender nonconforming,White or Caucasian,Lewis and Clark,Pre,10,2,3,3,5,4
+47,Fall 2023,Genderqueer or gender nonconforming,White or Caucasian,Lewis and Clark,Post,10,3,3,4,5,3
+48,Fall 2022,Non-Binary,White or Caucasian,Lewis and Clark,Pre,10,4,4,5,5,4
+48,Fall 2022,Non-Binary,White or Caucasian,Lewis and Clark,Post,9,4,5,5,5,5
+49,Fall 2022,Man,NA,Lewis and Clark,Pre,6,2,1,2,5,1
+49,Fall 2022,Man,NA,Lewis and Clark,Post,8,2,2,5,5,1
+50,Fall 2023,Woman,"Middle Eastern or North African,White or Caucasian",University of Arizona,Pre,9,1,3,4,5,1
+50,Fall 2023,Woman,"Middle Eastern or North African,White or Caucasian",University of Arizona,Post,9,2,1,2,5,1
+51,Fall 2024,Man,White or Caucasian,University of Arizona,Pre,8,2,3,2,5,1
+51,Fall 2024,Man,White or Caucasian,University of Arizona,Post,7,2,3,3,3,3
+52,Spring 2024,Woman,White or Caucasian,University of Arizona,Pre,8,3,4,5,5,3
+52,Spring 2024,Woman,White or Caucasian,University of Arizona,Post,10,4,5,5,5,4
+53,Fall 2023,Genderqueer or gender nonconforming,White or Caucasian,Lewis and Clark,Pre,7,3,3,4,4,2
+53,Fall 2023,Genderqueer or gender nonconforming,White or Caucasian,Lewis and Clark,Post,8,4,4,5,5,4
+54,Fall 2023,Woman,White or Caucasian,University of Arizona,Pre,9,3,4,5,5,4
+54,Fall 2023,Woman,White or Caucasian,University of Arizona,Post,10,3,3,4,5,3
+55,Fall 2023,Woman,White or Caucasian,University of Arizona,Pre,10,4,5,5,5,4
+55,Fall 2023,Woman,White or Caucasian,University of Arizona,Post,10,4,5,5,5,3
+56,Fall 2024,Woman,"Pacific Islander or Native Hawaiian,White or Caucasian",University of Arizona,Pre,9,3,4,4,5,2
+56,Fall 2024,Woman,"Pacific Islander or Native Hawaiian,White or Caucasian",University of Arizona,Post,10,4,4,5,5,2
+57,Fall 2023,Woman,"Middle Eastern or North African,White or Caucasian",University of Arizona,Pre,7,1,3,4,5,2
+57,Fall 2023,Woman,"Middle Eastern or North African,White or Caucasian",University of Arizona,Post,10,4,4,4,5,4
+58,Spring 2023,Man,Hispanic or Latinx,University of Arizona,Pre,7,3,1,3,4,1
+58,Spring 2023,Man,Hispanic or Latinx,University of Arizona,Post,10,3,3,4,4,1
+59,Fall 2022,Man,White or Caucasian,Lewis and Clark,Pre,10,3,4,4,4,3
+59,Fall 2022,Man,White or Caucasian,Lewis and Clark,Post,5,3,3,3,5,4
+60,Spring 2023,Woman,Hispanic or Latinx,University of Arizona,Pre,10,2,1,1,3,1
+60,Spring 2023,Woman,Hispanic or Latinx,University of Arizona,Post,10,3,3,4,4,3
+61,Fall 2023,Man,Hispanic or Latinx,Lewis and Clark,Pre,8,3,3,4,3,3
+61,Fall 2023,Man,Hispanic or Latinx,Lewis and Clark,Post,5,3,3,3,3,2
+62,Fall 2023,Man,White or Caucasian,University of Arizona,Pre,7,4,4,4,5,4
+62,Fall 2023,Man,White or Caucasian,University of Arizona,Post,10,5,5,5,5,5
+63,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Pre,10,3,3,4,3,3
+63,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Post,8,3,2,2,4,2
+64,Fall 2023,Man,"African American or Black,Asican American or Asian,White or Caucasian",Lewis and Clark,Pre,10,4,5,5,5,5
+64,Fall 2023,Man,"African American or Black,Asican American or Asian,White or Caucasian",Lewis and Clark,Post,10,2,2,3,5,1
+65,Fall 2022,Man,White or Caucasian,Lewis and Clark,Pre,10,2,3,3,5,1
+65,Fall 2022,Man,White or Caucasian,Lewis and Clark,Post,10,4,5,5,5,5
+66,Spring 2024,Woman,White or Caucasian,University of Arizona,Pre,10,4,4,4,5,4
+66,Spring 2024,Woman,White or Caucasian,University of Arizona,Post,10,5,5,5,5,4
+67,Fall 2022,Man,White or Caucasian,Lewis and Clark,Pre,10,2,2,3,5,1
+67,Fall 2022,Man,White or Caucasian,Lewis and Clark,Post,9,1,2,2,5,1
+68,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Pre,9,2,3,4,5,3
+68,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Post,8,3,4,4,5,3
+69,Fall 2024,Man,White or Caucasian,University of Arizona,Pre,9,3,4,5,4,3
+69,Fall 2024,Man,White or Caucasian,University of Arizona,Post,9,3,4,5,5,4
+70,Spring 2024,Man,White or Caucasian,University of Arizona,Pre,10,3,4,5,5,5
+70,Spring 2024,Man,White or Caucasian,University of Arizona,Post,10,4,4,5,5,5
+71,Fall 2022,Man,Hispanic or Latinx,Lewis and Clark,Pre,8,4,3,4,4,3
+71,Fall 2022,Man,Hispanic or Latinx,Lewis and Clark,Post,10,4,4,4,5,5
+72,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Pre,10,3,3,3,4,1
+72,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Post,10,3,1,2,4,2
+73,Fall 2022,Non-Binary,White or Caucasian,Lewis and Clark,Pre,6,2,1,1,4,1
+73,Fall 2022,Non-Binary,White or Caucasian,Lewis and Clark,Post,9,3,2,1,5,1
+74,Fall 2023,Man,White or Caucasian,Lewis and Clark,Pre,8,2,3,3,3,3
+74,Fall 2023,Man,White or Caucasian,Lewis and Clark,Post,10,3,2,2,4,4
+75,Fall 2022,Non-Binary,Hispanic or Latinx,Lewis and Clark,Pre,7,2,2,3,4,2
+75,Fall 2022,Non-Binary,Hispanic or Latinx,Lewis and Clark,Post,4,1,3,3,1,5
+76,Fall 2023,Woman,Asican American or Asian,Lewis and Clark,Pre,9,2,2,4,4,2
+76,Fall 2023,Woman,Asican American or Asian,Lewis and Clark,Post,10,5,5,5,5,3
+77,Fall 2023,Woman,"Hispanic or Latinx,White or Caucasian",University of Arizona,Pre,10,4,4,4,5,3
+77,Fall 2023,Woman,"Hispanic or Latinx,White or Caucasian",University of Arizona,Post,10,3,3,4,5,3
+78,Fall 2022,Non-Binary,White or Caucasian,Lewis and Clark,Pre,6,3,3,3,4,2
+78,Fall 2022,Non-Binary,White or Caucasian,Lewis and Clark,Post,10,5,5,5,5,5
+79,Spring 2023,Man,White or Caucasian,University of Arizona,Pre,10,5,5,5,5,5
+79,Spring 2023,Man,White or Caucasian,University of Arizona,Post,10,4,4,5,5,4
+80,Spring 2023,Woman,White or Caucasian,University of Arizona,Pre,9,3,4,5,5,2
+80,Spring 2023,Woman,White or Caucasian,University of Arizona,Post,8,2,2,3,5,2
+81,Fall 2022,Genderqueer or gender nonconforming,White or Caucasian,Lewis and Clark,Pre,9,2,4,4,4,3
+81,Fall 2022,Genderqueer or gender nonconforming,White or Caucasian,Lewis and Clark,Post,10,3,4,5,5,3
+82,Fall 2023,Woman,"Asican American or Asian,White or Caucasian",University of Arizona,Pre,10,2,2,5,5,1
+82,Fall 2023,Woman,"Asican American or Asian,White or Caucasian",University of Arizona,Post,10,3,3,5,4,3
+83,Fall 2024,Man,"Hispanic or Latinx,White or Caucasian",University of Arizona,Pre,9,2,4,5,5,4
+83,Fall 2024,Man,"Hispanic or Latinx,White or Caucasian",University of Arizona,Post,10,3,3,4,4,3
+84,Fall 2022,Woman,White or Caucasian,University of Arizona,Pre,10,4,4,5,5,3
+84,Fall 2022,Woman,White or Caucasian,University of Arizona,Post,10,4,4,5,5,3
+85,Fall 2022,Woman,White or Caucasian,University of Arizona,Pre,10,4,4,5,5,4
+85,Fall 2022,Woman,White or Caucasian,University of Arizona,Post,10,3,4,4,5,3
+86,Spring 2023,Man,I prefer not to answer,University of Arizona,Pre,8,3,4,4,4,4
+86,Spring 2023,Man,I prefer not to answer,University of Arizona,Post,7,3,3,4,4,3
+87,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Pre,10,3,3,5,5,3
+87,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Post,10,4,4,5,5,3
+88,Fall 2023,Woman,White or Caucasian,Lewis and Clark,Pre,9,3,4,5,4,4
+88,Fall 2023,Woman,White or Caucasian,Lewis and Clark,Post,6,3,5,5,5,4
+89,Fall 2024,Woman,Hispanic or Latinx,University of Arizona,Pre,8,3,2,2,4,2
+89,Fall 2024,Woman,Hispanic or Latinx,University of Arizona,Post,8,3,1,1,3,1
+90,Spring 2024,Woman,Asican American or Asian,University of Arizona,Pre,10,4,5,5,5,4
+90,Spring 2024,Woman,Asican American or Asian,University of Arizona,Post,10,4,5,5,5,5
+91,Fall 2022,Woman,"Hispanic or Latinx,White or Caucasian",Lewis and Clark,Pre,7,3,3,3,4,3
+91,Fall 2022,Woman,"Hispanic or Latinx,White or Caucasian",Lewis and Clark,Post,8,3,3,4,4,3
+92,Spring 2023,Woman,"Hispanic or Latinx,White or Caucasian",University of Arizona,Pre,9,3,4,5,5,3
+92,Spring 2023,Woman,"Hispanic or Latinx,White or Caucasian",University of Arizona,Post,10,4,4,5,5,4
+93,Fall 2022,Man,Hispanic or Latinx,Lewis and Clark,Pre,10,3,2,4,5,1
+93,Fall 2022,Man,Hispanic or Latinx,Lewis and Clark,Post,9,1,1,2,5,1
+94,Fall 2023,Woman,African American or Black,University of Arizona,Pre,10,3,4,5,5,2
+94,Fall 2023,Woman,African American or Black,University of Arizona,Post,10,2,4,4,5,2
+95,Spring 2023,Man,Hispanic or Latinx,University of Arizona,Pre,7,2,3,3,3,3
+95,Spring 2023,Man,Hispanic or Latinx,University of Arizona,Post,10,3,3,4,5,4
+96,Fall 2023,Man,White or Caucasian,University of Arizona,Pre,10,2,1,5,5,3
+96,Fall 2023,Man,White or Caucasian,University of Arizona,Post,10,1,1,4,5,1
+97,Fall 2023,Prefer not to say,Asican American or Asian,University of Arizona,Pre,10,3,3,4,4,4
+97,Fall 2023,Prefer not to say,Asican American or Asian,University of Arizona,Post,9,4,4,5,5,5
+98,Fall 2023,Woman,"Hispanic or Latinx,White or Caucasian",University of Arizona,Pre,8,4,3,5,5,4
+98,Fall 2023,Woman,"Hispanic or Latinx,White or Caucasian",University of Arizona,Post,9,4,4,5,5,4
+99,Fall 2023,Woman,White or Caucasian,Lewis and Clark,Pre,10,3,2,4,5,2
+99,Fall 2023,Woman,White or Caucasian,Lewis and Clark,Post,8,3,3,5,5,3
+100,Fall 2023,Non-Binary,White or Caucasian,Lewis and Clark,Pre,10,4,4,3,4,2
+100,Fall 2023,Non-Binary,White or Caucasian,Lewis and Clark,Post,10,4,5,5,5,3
+101,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Pre,10,3,4,4,5,4
+101,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Post,10,4,5,5,5,5
+102,Spring 2023,Woman,"Hispanic or Latinx,White or Caucasian",University of Arizona,Pre,10,3,4,5,5,3
+102,Spring 2023,Woman,"Hispanic or Latinx,White or Caucasian",University of Arizona,Post,10,5,4,4,5,3
+103,Fall 2023,Woman,White or Caucasian,University of Arizona,Pre,10,4,3,5,5,3
+103,Fall 2023,Woman,White or Caucasian,University of Arizona,Post,10,4,4,4,5,2
+104,Fall 2022,Woman,Asican American or Asian,Lewis and Clark,Pre,3,1,1,3,3,1
+104,Fall 2022,Woman,Asican American or Asian,Lewis and Clark,Post,1,1,1,3,1,1
+105,Fall 2022,Woman,Asican American or Asian,University of Arizona,Pre,10,5,5,5,5,5
+105,Fall 2022,Woman,Asican American or Asian,University of Arizona,Post,10,5,5,5,5,5
+106,Fall 2024,Man,White or Caucasian,University of Arizona,Pre,10,3,3,3,3,3
+106,Fall 2024,Man,White or Caucasian,University of Arizona,Post,9,2,2,5,5,2
+107,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Pre,10,3,4,5,5,4
+107,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Post,9,3,3,3,3,4
+108,Spring 2024,Woman,White or Caucasian,University of Arizona,Pre,10,3,4,5,5,2
+108,Spring 2024,Woman,White or Caucasian,University of Arizona,Post,10,4,4,5,5,4
+109,Fall 2022,Woman,"Asican American or Asian,White or Caucasian",Lewis and Clark,Pre,9,4,3,2,4,3
+109,Fall 2022,Woman,"Asican American or Asian,White or Caucasian",Lewis and Clark,Post,9,3,3,4,5,2
+110,Spring 2024,Prefer not to say,White or Caucasian,University of Arizona,Pre,10,3,3,5,5,4
+110,Spring 2024,Prefer not to say,White or Caucasian,University of Arizona,Post,10,2,2,4,5,1
+111,Spring 2023,Woman,White or Caucasian,University of Arizona,Pre,10,4,4,5,5,2
+111,Spring 2023,Woman,White or Caucasian,University of Arizona,Post,10,4,4,5,5,4
+112,Fall 2023,Woman,"White or Caucasian,I prefer to self-identify as",Lewis and Clark,Pre,6,2,1,1,4,1
+112,Fall 2023,Woman,"White or Caucasian,I prefer to self-identify as",Lewis and Clark,Post,9,2,2,3,5,1
+113,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Pre,6,4,4,4,5,4
+113,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Post,7,1,2,4,5,2
+114,Spring 2023,Man,Hispanic or Latinx,University of Arizona,Pre,10,2,4,3,3,3
+114,Spring 2023,Man,Hispanic or Latinx,University of Arizona,Post,10,3,4,4,4,4
+115,Fall 2022,Woman,"Asican American or Asian,White or Caucasian",Lewis and Clark,Pre,9,2,1,1,5,5
+115,Fall 2022,Woman,"Asican American or Asian,White or Caucasian",Lewis and Clark,Post,10,2,1,1,5,1
+116,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Pre,10,3,3,4,4,3
+116,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Post,10,2,2,2,5,2
+117,Fall 2024,Genderqueer or gender nonconforming,White or Caucasian,University of Arizona,Pre,10,4,5,5,5,4
+117,Fall 2024,Genderqueer or gender nonconforming,White or Caucasian,University of Arizona,Post,10,5,5,5,5,5
+118,Spring 2023,Woman,White or Caucasian,University of Arizona,Pre,10,3,3,4,4,3
+118,Spring 2023,Woman,White or Caucasian,University of Arizona,Post,9,4,4,5,5,4
+119,Fall 2024,Woman,White or Caucasian,University of Arizona,Pre,10,4,5,5,5,3
+119,Fall 2024,Woman,White or Caucasian,University of Arizona,Post,10,5,5,4,5,2
+120,Spring 2024,Man,White or Caucasian,University of Arizona,Pre,9,3,4,5,5,3
+120,Spring 2024,Man,White or Caucasian,University of Arizona,Post,10,3,3,5,5,3
+121,Fall 2022,Trans Man,White or Caucasian,Lewis and Clark,Pre,10,4,4,4,5,3
+121,Fall 2022,Trans Man,White or Caucasian,Lewis and Clark,Post,10,3,4,5,5,3
+122,Spring 2024,Man,"White or Caucasian,I prefer to self-identify as",University of Arizona,Pre,10,5,4,5,5,2
+122,Spring 2024,Man,"White or Caucasian,I prefer to self-identify as",University of Arizona,Post,10,4,4,4,4,1
+123,Spring 2023,Man,White or Caucasian,University of Arizona,Pre,10,4,5,4,4,5
+123,Spring 2023,Man,White or Caucasian,University of Arizona,Post,10,5,5,5,5,5
+124,Fall 2023,Woman,White or Caucasian,Lewis and Clark,Pre,8,2,2,2,5,2
+124,Fall 2023,Woman,White or Caucasian,Lewis and Clark,Post,8,1,2,2,5,1
+125,Fall 2022,Man,Hispanic or Latinx,Lewis and Clark,Pre,10,3,4,4,5,3
+125,Fall 2022,Man,Hispanic or Latinx,Lewis and Clark,Post,10,2,2,3,4,2
+126,Fall 2022,Woman,Asican American or Asian,Lewis and Clark,Pre,9,2,3,4,5,4
+126,Fall 2022,Woman,Asican American or Asian,Lewis and Clark,Post,10,2,3,5,5,4
+127,Spring 2024,Woman,White or Caucasian,University of Arizona,Pre,9,2,4,4,5,2
+127,Spring 2024,Woman,White or Caucasian,University of Arizona,Post,10,4,4,5,5,4
+128,Fall 2022,Non-Binary,White or Caucasian,Lewis and Clark,Pre,10,3,4,5,5,4
+128,Fall 2022,Non-Binary,White or Caucasian,Lewis and Clark,Post,10,4,5,5,5,3
+129,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Pre,6,2,1,3,4,1
+129,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Post,8,3,3,4,4,3
+130,Fall 2022,Man,White or Caucasian,Lewis and Clark,Pre,7,2,2,2,3,2
+130,Fall 2022,Man,White or Caucasian,Lewis and Clark,Post,8,4,3,3,4,3
+131,Fall 2024,Woman,White or Caucasian,University of Arizona,Pre,9,3,3,3,4,2
+131,Fall 2024,Woman,White or Caucasian,University of Arizona,Post,9,5,4,4,5,4
+132,Fall 2022,Man,"Hispanic or Latinx,White or Caucasian",Lewis and Clark,Pre,9,3,3,4,5,2
+132,Fall 2022,Man,"Hispanic or Latinx,White or Caucasian",Lewis and Clark,Post,8,3,2,4,5,2
+133,Fall 2024,Man,White or Caucasian,University of Arizona,Pre,9,3,3,4,3,2
+133,Fall 2024,Man,White or Caucasian,University of Arizona,Post,9,4,4,5,4,2
+134,Fall 2023,Woman,White or Caucasian,Lewis and Clark,Pre,8,3,4,4,5,1
+134,Fall 2023,Woman,White or Caucasian,Lewis and Clark,Post,10,3,3,4,5,4
+135,Fall 2023,Woman,Hispanic or Latinx,University of Arizona,Pre,8,3,4,5,5,5
+135,Fall 2023,Woman,Hispanic or Latinx,University of Arizona,Post,10,4,5,5,5,5
+136,Fall 2022,Man,NA,Lewis and Clark,Pre,10,5,5,3,5,1
+136,Fall 2022,Man,NA,Lewis and Clark,Post,10,1,1,1,5,1
+137,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Pre,9,3,3,5,4,4
+137,Fall 2022,Woman,White or Caucasian,Lewis and Clark,Post,10,4,5,5,5,5

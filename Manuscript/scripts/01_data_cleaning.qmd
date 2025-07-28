@@ -1,0 +1,98 @@
+---
+title: "Data in the Wild--Data Cleaning"
+author: "Ellen Bledsoe"
+date: today
+format: gfm
+---
+
+This documents cleans the data for the Data in the Wild manuscript analyses.
+
+## Packages and Data
+
+Load the packages used in data cleaning.
+
+```{r}
+#| message: false
+library(tidyverse)    # for data wrangling
+library(readxl)       # read in data
+```
+
+Read in the data.
+
+```{r}
+#| message: false
+data <- readxl::read_excel("../data_raw/DataInTheWild_PrePost_ForEllen.xlsx", 
+                           col_names = FALSE)
+glimpse(data)
+```
+
+Remove the row with what all the questions are and save them in case we need them later.
+
+```{r}
+# save questions as a vector
+questions <- slice(data, 3)
+
+# remove rows with questions and summary stats
+data <- data %>% 
+  # keep all but the last 3 rows
+  slice(1:(n()-3)) %>% 
+  # remove the 3rd row
+  slice(-3)
+
+head(data)
+tail(data)
+```
+
+Combine the first two rows to one row to create column names.
+
+```{r}
+colnames(data) <- c("Term", 
+                    "Q39_Pre", "Q39_Post", 
+                    "Q15_Pre", "Q15_Post", 
+                    "Q17_1_Pre", "Q17_1_Post",
+                    "Q17_2_Pre", "Q17_2_Post",
+                    "Q17_3_Pre", "Q17_3_Post",
+                    "Q17_4_Pre", "Q17_4_Post",
+                    "Gender", "Race", "School")
+data <- slice(data, -1:-2)
+
+head(data)
+```
+
+Add a column to identify that each row represents one student.
+
+```{r}
+data <- data %>% 
+  mutate(StudentID = as.character(1:nrow(.)), .before = Term)
+```
+
+Create a column for whether the data are pre or post survey.
+
+```{r}
+data <- data %>% 
+  # make the data longer
+  pivot_longer(cols = ends_with(c("Pre", "Post")),
+               names_to = "Question",
+               values_to = "Value") %>% 
+  # create two columns--one for the question and one for the survey type
+  # this splits based on the last deliminter
+  separate_wider_regex(Question, c(Question = ".*", "_", Survey_Type = ".*")) %>% 
+  # put back into a wider format with each question as one column
+  pivot_wider(names_from = "Question", 
+              values_from = "Value")
+
+head(data)
+```
+
+Convert all of the scale responses to numeric.
+
+```{r}
+data <- data %>% 
+  mutate(across(.cols = starts_with("Q"), .fns = as.numeric))
+```
+
+Save the cleaned version of the data as a .CSV file.
+
+```{r}
+write_csv(data, "../data_clean/data_cleaned.csv")
+```
