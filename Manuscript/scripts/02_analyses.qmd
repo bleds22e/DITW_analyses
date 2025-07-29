@@ -1,9 +1,8 @@
 ---
 title: "Data in the Wild--Analyses"
+author: "Ellen Bledsoe"
+date: today
 format: gfm
-execute:
-  message: false
-editor: visual
 ---
 
 This document contains the analyses for the Data in the Wild course.
@@ -14,11 +13,10 @@ Load the packages used in analyses.
 
 ```{r}
 #| message: false
-library(tidyverse)
-library(lme4)
-library(lmerTest)
-library(broom.mixed)
-library(effectsize)
+library(tidyverse)    # for data wrangling
+library(lme4)         # for running linear mixed effects models
+library(lmerTest)     # for getting p-values from lme4 models
+library(broom.mixed)  # for tidy summaries of lme4 models
 ```
 
 Read in the cleaned dataset.
@@ -55,6 +53,10 @@ data %>%
 
 ## Run Linear Mixed Effects Models
 
+We want to know if the answers to each question have changed significantly from pre- to post-survey.
+
+I'm using a linear mixed effects model to include the student's identity, the university where the course was taught, and the semester in which the course was taught as random effects.
+
 ### Question 39
 
 Run a model for Q39 responses as a function of the survey (pre vs. post). Include student, semester, and university as random effects.
@@ -62,7 +64,7 @@ Run a model for Q39 responses as a function of the survey (pre vs. post). Includ
 ```{r}
 model_Q39 <- lmer(Q39 ~ Survey_Type + (1 | Term) + (1 | School) + (1 | StudentID), 
               data = data)
-broom.mixed::tidy(model_Q39)
+(output_Q39 <- tidy(model_Q39))
 ```
 
 Semester (`Term`) has a variance of 0, which is causing singularity. Let's remove that random effect.
@@ -70,19 +72,23 @@ Semester (`Term`) has a variance of 0, which is causing singularity. Let's remov
 ```{r}
 model_Q39 <- lmer(Q39 ~ Survey_Type + (1 | School) + (1 | StudentID), 
               data = data)
-(output_Q39 <- broom.mixed::tidy(model_Q39))
+(output_Q39 <- tidy(model_Q39))
 ```
 
 This removes warning about singularity, which is great.
 
-\| The p-value is `r round(output_Q39$p.value[2], 2)`, meaning no significant difference.
+> **NOTE:** The p-value is `r round(output_Q39$p.value[2], 2)`, meaning no significant difference.
 
 Let's check the model performance. Q39 answers do not have a normal distribution.
 
-```{r}
+```{r include=FALSE}
+par(mfrow = c(1,2))
+
 resid_vals <- residuals(model_Q39)
 qqnorm(resid_vals); qqline(resid_vals)
 hist(resid_vals, main = "Histogram of Residuals", xlab = "Residuals")
+
+par(mfrow = c(1,1))
 ```
 
 Residuals aren't great, but aren't horrible, either?
@@ -95,25 +101,31 @@ model_Q39 <- lmer(Q39 ~ Survey_Type + School + (1 | StudentID),
 broom.mixed::tidy(model_Q39)
 ```
 
-This does not change out qualitative result at all.
+This does not change out qualitative result at all. 
+
+However, it does indicate that the institution at which the course was taught does have an impact on the scores. I'm not sure if this is worth investigating, though it does make some sense. The two schools have quite different student bodies, and the courses had slightly different flavors--one was more stats-heavy and the other more computationally-focused.
 
 ### Question 15
 
-Let's run the analysis with Question 15. For every question, the variance of semester ends up being 0, so I will pre-emptively remove it.
+Let's run the analysis with Question 15. For every question, the variance of semester ends up being 0, so I will preemptively remove it.
 
 ```{r}
 model_Q15 <- lmer(Q15 ~ Survey_Type + (1 | StudentID) + (1 | School), 
                   data = data)
-broom.mixed::tidy(model_Q15)
+(output_Q15 <- tidy(model_Q15))
 ```
 
 Check the residuals
 
-```{r}
+```{r include=FALSE}
+par(mfrow = c(1,2))
 resid_vals <- residuals(model_Q15)
 qqnorm(resid_vals); qqline(resid_vals)
 hist(resid_vals, main = "Histogram of Residuals", xlab = "Residuals")
+par(mfrow = c(1,1))
 ```
+
+> **NOTE:** The p-value is `r round(output_Q15$p.value[2], 2)`, meaning no significant difference.
 
 ### Question 17_1
 
@@ -122,50 +134,64 @@ Let's run the analysis with Question 17_1.
 ```{r}
 model_Q17_1 <- lmer(Q17_1 ~ Survey_Type + (1 | StudentID) + (1 | School), 
                   data = data)
-broom.mixed::tidy(model_Q17_1)
+(output_Q17_1 <- tidy(model_Q17_1))
 ```
 
 Check the residuals
 
-```{r}
+```{r include=FALSE}
+par(mfrow = c(1,2))
 resid_vals <- residuals(model_Q17_1)
 qqnorm(resid_vals); qqline(resid_vals)
 hist(resid_vals, main = "Histogram of Residuals", xlab = "Residuals")
+par(mfrow = c(1,1))
 ```
+
+> **NOTE:** The p-value is `r round(output_Q17_1$p.value[2], 2)`, meaning no significant difference.
 
 ### Question 17_2
 
 ```{r}
 model_Q17_2 <- lmer(Q17_2 ~ Survey_Type + (1 | StudentID) + (1 | School), 
                   data = data)
-broom.mixed::tidy(model_Q17_2)
+(output_Q17_2 <- tidy(model_Q17_2))
 ```
 
 Check the residuals
 
-```{r}
+```{r include=FALSE}
+par(mfrow = c(1,2))
 resid_vals <- residuals(model_Q17_2)
 qqnorm(resid_vals); qqline(resid_vals)
 hist(resid_vals, main = "Histogram of Residuals", xlab = "Residuals")
+par(mfrow = c(1,1))
 ```
+
+> **NOTE:** The p-value is `r round(output_Q17_2$p.value[2], 2)`, meaning no significant difference.
 
 ### Question 17_3
 
 Let's run the analysis with Question 17_3.
 
+This is the question about the importance of data science in conservation.
+
 ```{r}
 model_Q17_3 <- lmer(Q17_3 ~ Survey_Type + (1 | StudentID) + (1 | School), 
                   data = data)
-broom.mixed::tidy(model_Q17_3)
+(output_Q17_3 <- tidy(model_Q17_3))
 ```
 
 Check the residuals
 
-```{r}
+```{r include=FALSE}
+par(mfrow = c(1,2))
 resid_vals <- residuals(model_Q17_3)
 qqnorm(resid_vals); qqline(resid_vals)
 hist(resid_vals, main = "Histogram of Residuals", xlab = "Residuals")
+par(mfrow = c(1,1))
 ```
+
+> **NOTE:** The p-value is `r round(output_Q17_3$p.value[2], 2)`, which is our only significant result.
 
 ### Question 17_4
 
@@ -174,19 +200,42 @@ Let's run the analysis with Question 17_4.
 ```{r}
 model_Q17_4 <- lmer(Q17_4 ~ Survey_Type + (1 | StudentID) + (1 | School), 
                   data = data)
-summary(model_Q17_4)
+(output_Q17_4 <- tidy(model_Q17_4))
 ```
 
 Check the residuals
 
-```{r}
+```{r include=FALSE}
+par(mfrow = c(1,2))
 resid_vals <- residuals(model_Q17_4)
 qqnorm(resid_vals); qqline(resid_vals)
 hist(resid_vals, main = "Histogram of Residuals", xlab = "Residuals")
+par(mfrow = c(1,1))
 ```
 
-TO DO:
+> **NOTE:** The p-value is `r round(output_Q17_4$p.value[2], 2)`, meaning no significant difference.
 
--   correct p-values for multiple analyses
+## Results
 
--   consider running analyses on absolute values–students learn if they like DS or really don't like DS, which is also fine!
+First, bring all of the results together.
+
+```{r}
+results <- list_rbind(mget(ls(pattern = "output_*")), names_to = "id") |> 
+  filter(term == "Survey_TypePre") |> 
+  mutate(id = str_extract(id, "Q.*")) |> 
+  select(id, term:p.value)
+```
+
+Now correct for multiple statistical tests.
+
+```{r}
+results <- results |> 
+  mutate(p.adjust = p.adjust(p.value, method = "BH"))
+```
+
+With the correction for multiple tests, no p-values are considered significant.
+
+```{r}
+results |> 
+  select(id, p.value, p.adjust)
+```
