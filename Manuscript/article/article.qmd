@@ -1,0 +1,69 @@
+---
+title: insert title
+subtitle: subtitle
+author:
+  - name: Ellen K. Bledsoe
+    email: ebledsoe@arizona.edu
+    affiliations: 
+        - id: UA
+          name: University of Arizona
+          department: School of Natural Resources and the Environment
+          address: 1064 E Lowell Street
+          city: Tucson
+          state: AZ
+          postal-code: 85721
+    attributes:
+        corresponding: true
+  - name: Kathleen Prudic
+    email: klprudic@arizona.edu
+    affiliations:
+        - id: UA
+abstract: |
+  This is the abstract.
+keywords: 
+  - data science
+  - data literacy
+  - undergraduate
+  - general education
+  - conservation
+  - computer programming
+date: last-modified
+bibliography: bibliography.bib
+format:
+  elsevier-pdf:
+    keep-tex: true
+    journal:
+      name: Journal Name
+      formatting: preprint
+      # model: 3p # Don't set a model with preprint
+      cite-style: authoryear
+---
+
+# Introduction
+
+This will talk about the need for data literacy training for undergraduates, especially in the age of generative AI. 
+
+It will discuss the need for early and broad introductions to data literacy and data science through the general education curriculum.
+
+It will talk about the importance of data-driven decision making.
+
+Specifically, there will be at least one paragraph about the importance of data-driven decision-making in conservation.
+
+# Course Materials
+
+## Pedagogy for DS
+
+## Open Educational Resources (OERs)
+
+# Analysis of Impact
+
+## Data Collection
+
+## Statistical Methods
+
+## Results
+
+# Discussion
+
+
+# References {-}
