@@ -1,11 +1,11 @@
 ---
 title: "Data in the Wild--Data Cleaning"
 author: "Ellen Bledsoe"
-date: today
 format: gfm
+date: today
 ---
 
-This documents cleans the data for the Data in the Wild manuscript analyses.
+This document cleans the data for the Data in the Wild manuscript analyses.
 
 ## Packages and Data
 
