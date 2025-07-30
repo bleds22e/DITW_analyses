@@ -59,20 +59,30 @@ data_long |>
   ggplot(aes(x = Responses_Score,
              y = Survey_Type,
              fill = Score)) +
+  # position = "likert" aligns the bars at the central value
+  # this allows you to better see the shift in "weight" in answers
   geom_bar(stat = "identity", position = "likert") +
   geom_vline(aes(xintercept = 0), color = "lightgray") +
-  geom_text(aes(x = 1, label = round(Avg_Score, 1))) +
+  geom_text(aes(label = round(Avg_Score, 1), group = Survey_Type), x = 1) +
   scale_fill_viridis_d(direction = 1) +
-  theme_classic()
+  theme_classic() 
 ```
 
+Plot the rest of the questions.
+
 ```{r}
-ggplot(data_long, aes(x = Proportion,
-                      y = Survey_Type,
-                      fill = Score)) +
-  geom_bar(stat = "identity") +
+data_long |> 
+  filter(Question != "Q39") |> 
+  ggplot(aes(x = Responses_Score,
+             y = Survey_Type,
+             fill = Score)) +
+  # position = "likert" aligns the bars at the central value
+  # this allows you to better see the shift in "weight" in answers
+  geom_bar(stat = "identity", position = "likert") +
+  geom_vline(aes(xintercept = 0), color = "lightgray") +
+  facet_wrap(~ Question) +
+  geom_text(aes(label = round(Avg_Score, 1), group = Survey_Type), x = 1) +
   scale_fill_viridis_d(direction = 1) +
-  facet_wrap(~ Question, scales = "free_x") +
   theme_classic()
 ```
 
